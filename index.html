@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Instagram</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
   </style>
   <link rel="stylesheet" href="./index.css">
 </head>
@@ -15,20 +15,57 @@
 <body>
   <div class="app">
     <main class="main">
-      <form class="signin">
-        <h2 class="signin__title">Instagram</h2>
-        <input type="text" class="signin__field" placeholder="Телефон, имя пользователя или эл. адрес">
-        <input type="password" class="signin__field" placeholder="Пароль">
-        <button class="signin__submit">Войти</button>
-        <p class="signin__text">ИЛИ</p>
-        <div class="signin__facebook" tabindex="0">
-          <img class="signin__facebook-icon" src="./media/facebook.svg" alt="facebook">
-          <p class="signin__facebook-text">Войти через Facebook</p>
+      <div class="signin-wrapper">
+        <form class="signin">
+          <h2 class="signin__title">Instagram</h2>
+          <input type="text" class="signin__field signin__field-email" placeholder="Электронный адрес">
+          <input type="password" class="signin__field signin__field-password" placeholder="Пароль">
+          <button class="signin__submit">Войти</button>
+          <div class="signin__text-wrapper">
+            <div class="signin__text-line"></div>
+            <p class=" signin__text">ИЛИ</p>
+            <div class="signin__text-line"></div>
+          </div>
+          <div class="signin__facebook" tabindex="0">
+            <img class="signin__facebook-icon" src="./media/signin-facebook-icon.svg" alt="facebook">
+            <p class="signin__facebook-text">Войти через Facebook</p>
+          </div>
+        </form>
+        <div class="main__signup">
+          <p class="main__signup-text">У вас ещё нет аккаунта?</p>
+          <a href="#" class="main__signup-link">Зарегистрироваться</a>
         </div>
-      </form>
+      </div>
+
+      <div class="signup-wrapper active">
+        <form class="signup">
+          <h2 class="signup__title">Instagram</h2>
+          <p class="signup__title-text">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</p>
+          <div class="signup__facebook" tabindex="0">
+            <img class="signup__facebook-icon" src="./media/signup-facebook-icon.svg" alt="facebook">
+            <p class="signup__facebook-text">Войти через Facebook</p>
+          </div>
+          <div class="signup__text-wrapper">
+            <div class="signup__text-line"></div>
+            <p class=" signup__text">ИЛИ</p>
+            <div class="signup__text-line"></div>
+          </div>
+          <input type="text" class="signup__field signup__field-email" placeholder="Электронный адрес">
+          <input type="text" class="signup__field signup__field-password" placeholder="Имя и фамилия">
+          <input type="text" class="signup__field signup__field-password" placeholder="Имя пользователя">
+          <input type="password" class="signup__field signup__field-password" placeholder="Пароль">
+          <button class="signup__submit">Регистрация</button>
+          <p class="signup__info">Регистрируясь, вы принимаете наши Условия, Политику использования данных и Политику в
+            отношении файлов cookie.</p>
+        </form>
+        <div class="main__signin">
+          <p class="main__signin-text">Есть аккаунт?</p>
+          <a href="#" class="main__signin-link">Вход</a>
+        </div>
+      </div>
     </main>
     <footer class="footer">
-      <h2 class="footer__title">Developed by Daineko Vitaly © 2021</h1>
+      <h4 class="footer__title">Developed by Daineko Vitaly © 2021</h1>
     </footer>
   </div>
 </body>

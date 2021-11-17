@@ -4,114 +4,171 @@
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
   outline: none;
+  text-decoration: none;
 }
 
 .app{
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #fafafa;
 }
 
 .main{
   flex: 1 0 auto;
-  padding: 100px 10px;
+  padding: 90px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.signin{
-  border: 1px solid #dbdbdb;
-  max-width: 400px;
+.signin-wrapper, .signup-wrapper{
+  display: none;
+  max-width: 350px;
   width: 100%;
-  margin: 0 auto;
-  padding: 50px;
+}
+.signin-wrapper.active, .signup-wrapper.active{
+  display: block;
+}
+
+.signin, .main__signup, .signup, .main__signin{
+  border: 1px solid #dbdbdb;
   background-color: #fff;
   text-align: center;
 }
-.signin__title{
+
+.signin, .signup{
+  padding: 50px;
+  margin-bottom: 20px;
+}
+.main__signup, .main__signin{
+  padding: 20px;
+  display: flex;
+  font-size: 14px;
+  justify-content: center;
+}
+
+.signin__title, .signup__title{
   text-align: center;
   margin-bottom: 40px;
 }
-.signin__field{
+.signup__title-text{
+  color: #8e8e8e;
+  font-size: 16px;
+  font-weight: 500;
+  max-width: 250px;
+  width: 100%;
+  margin: 0 auto 20px auto;
+}
+.signin__field, .signup__field{
   display: block;
   margin: 0 auto;
   margin-bottom: 15px;
   font-size: 16px;
   padding: 9px;
-  width: 250px;
+  max-width: 250px;
+  width: 100%;
   background-color: #fafafa;
   border: 1px solid #dbdbdb;
   color: #262626;
   border-radius: 4px;
 }
-.signin__field::placeholder{
+.signin__field::placeholder, .signup__field::placeholder{
   font-size: 11px;
 }
-.signin__field:focus{
+.signin__field:focus, .signup__field:focus{
   border: 1px solid #5c5c5cbd;
 }
-.signin__submit{
+.signin__submit, .signup__submit{
   color: #fff;
   background-color: #2299fa;
-  width: 250px;
+  max-width: 250px;
+  width: 100%;
   padding: 8px;
   border: none;
   border-radius: 4px;
   margin-bottom: 20px;
 }
-.signin__submit:hover{
+.signin__submit:hover, .signup__submit:hover{
   cursor: pointer;
 }
-.signin__submit:active{
+.signin__submit:active, .signup__submit:active{
   background-color: #2299fab3;
 }
-.signin__submit:focus{
+.signin__submit:focus, .signup__submit:focus{
   outline: 2px solid #000;
 }
-.signin__text{
+.signin__text-wrapper, .signup__text-wrapper{
+  max-width: 250px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.signin__text, .signup__text{
   color: #8e8e8e;
   font-size: 13px;
   line-height: 15px;
   position: relative;
-  margin-bottom: 20px;
+  margin: 0 10px;
 }
-.signin__text:before{
-  content: '';
-  position: absolute;
+.signin__text-line, .signup__text-line{
   border-bottom: 1px solid #8e8e8e;
-  width: 90px;
-  top: 40%;
-  left: 24px;
+  width: 100%;
 }
-.signin__text::after{
-  content: '';
-  position: absolute;
-  border-bottom: 1px solid #8e8e8e;
-  width: 90px;
-  top: 40%;
-  right: 24px;
-}
-.signin__facebook{
-  width: 200px;
+.signin__facebook, .signup__facebook{
   display: flex;
+  justify-content: center;
   height: 30px;
   color: #385185;
   font-size: 14px;
   line-height: 18px;
-  font-weight: 600;
+  font-weight: 500;
   margin: 0 auto;
   cursor: pointer;
   padding: 5px;
+  max-width: 250px;
+  width: 100%;
 }
-.signin__facebook:focus{
+.signup__facebook{
+  margin-bottom: 20px;
+  background-color: #2299fa;
+  border-radius: 4px;
+  color: #fff;
+  fill: #000;
+}
+.signin__facebook:focus, .signup__facebook:focus{
   outline: 2px solid #000;
 }
-.signin__facebook-icon{
+.signin__facebook-icon, .signup__facebook-icon{
   user-select: none;
   margin-right: 15px;
 }
 .signin__facebook-text{
   user-select: none;
 }
+.main__signup-text, .main__signin-text{
+  margin-right: 10px;
+}
+.main__signup-link, .main__signin-link{
+  color: #2299fa;
+}
+.main__signup-link:focus, .main__signin-link:focus{
+  outline: 2px solid #000;
+}
+.signup__info{
+  max-width: 250px;
+  width: 100%;
+  margin: 0 auto;
+  color: #8e8e8e;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  font-weight: 500;
+}
+
 
 .footer{
   flex: 0 0 auto;
@@ -119,4 +176,14 @@
 .footer__title{
   text-align: center;
   padding: 15px;
+}
+
+@media (max-width: 374px){
+  .signin, .signup{
+    padding: 50px 10px;
+  }
+
+  .main__signup{
+    flex-direction: column;
+  }
 }
