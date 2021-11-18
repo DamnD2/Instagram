@@ -15,12 +15,13 @@
 <body>
   <div class="app">
     <main class="main">
-      <div class="signin-wrapper">
+      <div class="signin-wrapper active">
         <form class="signin">
           <h2 class="signin__title">Instagram</h2>
           <input type="text" class="signin__field signin__field-email" placeholder="Электронный адрес">
           <input type="password" class="signin__field signin__field-password" placeholder="Пароль">
           <button class="signin__submit">Войти</button>
+          <p class="signin__error"></p>
           <div class="signin__text-wrapper">
             <div class="signin__text-line"></div>
             <p class=" signin__text">ИЛИ</p>
@@ -37,7 +38,7 @@
         </div>
       </div>
 
-      <div class="signup-wrapper active">
+      <div class="signup-wrapper">
         <form class="signup">
           <h2 class="signup__title">Instagram</h2>
           <p class="signup__title-text">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</p>
@@ -51,10 +52,11 @@
             <div class="signup__text-line"></div>
           </div>
           <input type="text" class="signup__field signup__field-email" placeholder="Электронный адрес">
-          <input type="text" class="signup__field signup__field-password" placeholder="Имя и фамилия">
-          <input type="text" class="signup__field signup__field-password" placeholder="Имя пользователя">
+          <input type="text" class="signup__field signup__field-name" placeholder="Имя и фамилия">
+          <input type="text" class="signup__field signup__field-username" placeholder="Имя пользователя">
           <input type="password" class="signup__field signup__field-password" placeholder="Пароль">
-          <button class="signup__submit">Регистрация</button>
+          <button type="button" class="signup__submit">Регистрация</button>
+          <p class="signup__error"></p>
           <p class="signup__info">Регистрируясь, вы принимаете наши Условия, Политику использования данных и Политику в
             отношении файлов cookie.</p>
         </form>
@@ -68,6 +70,8 @@
       <h4 class="footer__title">Developed by Daineko Vitaly © 2021</h1>
     </footer>
   </div>
+
+  <script src="./main.js"></script>
 </body>
 
 </html>

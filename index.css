@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
-  outline: none;
   text-decoration: none;
 }
 
@@ -73,12 +72,19 @@
   border: 1px solid #dbdbdb;
   color: #262626;
   border-radius: 4px;
+  outline: none;
+}
+.signup__field.error, .signin__field.error{
+  border: 1px solid #ed4956;
 }
 .signin__field::placeholder, .signup__field::placeholder{
   font-size: 11px;
 }
 .signin__field:focus, .signup__field:focus{
   border: 1px solid #5c5c5cbd;
+}
+.signin__field:focus.error, .signup__field:focus.error{
+  border: 1px solid #ed4956;
 }
 .signin__submit, .signup__submit{
   color: #fff;
@@ -89,11 +95,13 @@
   border: none;
   border-radius: 4px;
   margin-bottom: 20px;
+  outline: none;
 }
 .signin__submit:hover, .signup__submit:hover{
   cursor: pointer;
 }
 .signin__submit:active, .signup__submit:active{
+  outline: none;
   background-color: #2299fab3;
 }
 .signin__submit:focus, .signup__submit:focus{
@@ -167,6 +175,13 @@
   line-height: 16px;
   text-align: center;
   font-weight: 500;
+}
+
+.signin__error, .signup__error {
+  color: #ed4956;
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 20px;
 }
 
 
