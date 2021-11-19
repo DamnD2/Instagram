@@ -4,9 +4,9 @@ const users = new LocalStorageAdapter('users', 'array');
 const isLoggedInUser = new LocalStorageAdapter('isLoggedInUser', 'object');
 
 (function init () {
-  const isLoggedInUserEmail = isLoggedInUser.getValue().email;
-  if(isLoggedInUserEmail) {
-    alert(`Hello ${isLoggedInUserEmail}`);
+  const isLoggedInUserName = isLoggedInUser.getValue().username;
+  if(isLoggedInUserName) {
+    alert(`Hello ${isLoggedInUserName}`);
   }
 })();
 
@@ -85,11 +85,13 @@ function signinSubmit () {
     const errorMessage = 'Неверный пароль.';
     addErrorClassAndSetSigninError(errorMessage, password);
   } else {
-    isLoggedInUser.setValue({email: email.value});
+    const userData = users.getValue().find((user) => user.email === email.value);
+    delete userData.password;
+    isLoggedInUser.setValue(userData);
     addErrorClassAndSetSigninError('', null);
     email.value = '';
     password.value = '';
-    alert(`Hello ${isLoggedInUser.getValue().email}`);
+    alert(`Hello ${isLoggedInUser.getValue().username}`);
   }
 }
 
