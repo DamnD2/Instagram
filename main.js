@@ -1,15 +1,12 @@
 const signinForm = document.querySelector('.signin-wrapper');
 const signupForm = document.querySelector('.signup-wrapper');
-let users = [];
-let isLoggedInUser = JSON.parse(localStorage.getItem('isLoggedInUser'));
+const users = new LocalStorageAdapter('users', 'array');
+const isLoggedInUser = new LocalStorageAdapter('isLoggedInUser', 'object');
 
 (function init () {
-  const localStorageUsers = localStorage.getItem('users');
-  if (localStorageUsers) {
-    users = JSON.parse(localStorageUsers);
-  }
-  if(isLoggedInUser) {
-    alert(`Hello ${isLoggedInUser.email}`);
+  const isLoggedInUserEmail = isLoggedInUser.getValue().email;
+  if(isLoggedInUserEmail) {
+    alert(`Hello ${isLoggedInUserEmail}`);
   }
 })();
 
@@ -56,13 +53,12 @@ function signupSubmit () {
       заглавную букву, одну строчную буква, одну цифру и один специальный символ.`;
       addErrorClassAndSetSignupError(errorMessage, password);
   } else {
-    users.push({
+    users.setValue({
       email: email.value,
       name: name.value,
       username: userName.value,
       password: password.value,
     });
-    localStorage.setItem('users', JSON.stringify(users));
     addErrorClassAndSetSignupError('', null);
     email.value = '';
     name.value = '';
@@ -89,17 +85,16 @@ function signinSubmit () {
     const errorMessage = 'Неверный пароль.';
     addErrorClassAndSetSigninError(errorMessage, password);
   } else {
-    isLoggedInUser = {email: email.value};
-    localStorage.setItem('isLoggedInUser', JSON.stringify(isLoggedInUser));
+    isLoggedInUser.setValue({email: email.value});
     addErrorClassAndSetSigninError('', null);
     email.value = '';
     password.value = '';
-    alert(`Hello ${isLoggedInUser.email}`);
+    alert(`Hello ${isLoggedInUser.getValue().email}`);
   }
 }
 
 function userVerification (email, password) {
-  const user = users.find((user) => user.email === email);
+  const user = users.getValue().find((user) => user.email === email);
   
   return user.password === password;
 }
@@ -145,7 +140,7 @@ function passwordValidaton (password) {
 function checkingEmailMatch (email) {
   let match = false;
 
-  users && users.forEach((user) => {
+  users.getValue().forEach((user) => {
       if (user.email === email) {
         match = true;
       }
@@ -157,7 +152,7 @@ function checkingEmailMatch (email) {
 function checkingUsernameMatch (userName) {
   let match = false;
 
-  users && users.forEach((user) => {
+  users.getValue().forEach((user) => {
       if (user.username === userName) {
         match = true;
       }
