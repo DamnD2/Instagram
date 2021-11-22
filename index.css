@@ -63,7 +63,7 @@
 .signin__field, .signup__field{
   display: block;
   margin: 0 auto;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   font-size: 16px;
   padding: 9px;
   max-width: 250px;
@@ -177,11 +177,17 @@
   font-weight: 500;
 }
 
-.signin__error, .signup__error {
+.signin__error{
   color: #ed4956;
   font-size: 14px;
   line-height: 18px;
   margin-bottom: 20px;
+}
+
+.email-error, .age-error, .username-error, .password-error{
+  color: #ed4956;
+  font-size: 12px;
+  margin-bottom: 10px;
 }
 
 

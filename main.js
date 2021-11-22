@@ -1,166 +1,171 @@
-const signinForm = document.querySelector('.signin-wrapper');
-const signupForm = document.querySelector('.signup-wrapper');
+const signupFormWrapper = document.querySelector('.signup-wrapper');
+const signupForm = document.querySelector('.signup');
+const signupEmail = signupForm.querySelector('.email');
+const signupAge = signupForm.querySelector('.age');
+const signupUserName = signupForm.querySelector('.username');
+const signupPassword = signupForm.querySelector('.password');
+const signupEmailError = signupForm.querySelector('.email-error');
+const signupAgeError = signupForm.querySelector('.age-error');
+const signupUserNameError = signupForm.querySelector('.username-error');
+const signupPasswordError = signupForm.querySelector('.password-error');
+const switchToSigninButton = document.querySelector('.main__signin-link');
+
+const signinFormWrapper = document.querySelector('.signin-wrapper');
+const signinForm = document.querySelector('.signin');
+const signinEmail = signinForm.querySelector('.email');
+const signinPassword = signinForm.querySelector('.password');
+const signinError = signinForm.querySelector('.signin__error');
+const switchToSignupButton = document.querySelector('.main__signup-link');
+
 const users = new LocalStorageAdapter('users', 'array');
-const isLoggedInUser = new LocalStorageAdapter('isLoggedInUser', 'object');
+const loggedInUserData = new LocalStorageAdapter('loggedInUserData', 'object');
+
 
 (function init () {
-  const isLoggedInUserName = isLoggedInUser.getValue().username;
-  if(isLoggedInUserName) {
-    alert(`Hello ${isLoggedInUserName}`);
+  const loggedInUserName = loggedInUserData.getValue().username;
+  if(loggedInUserName) {
+    alert(`Hello ${loggedInUserName}`);
   }
 })();
 
-document.addEventListener('click', (event) => {
-  if (event.target.closest('.main__signin-link')) {
-    switchToSignin();
-  } else if (event.target.closest('.main__signup-link')) {
-      switchToSignup();
-  } else if (event.target.closest('.signup__submit')) {
-      signupSubmit();
-  } else if (event.target.closest('.signin__submit')) {
-      signinSubmit();
-  }
-});
+signupForm.addEventListener('submit', () => signupSubmit());
+signinForm.addEventListener('submit', () => signinSubmit());
+switchToSigninButton.addEventListener('click', () => switchToSignin());
+switchToSignupButton.addEventListener('click', () => switchToSignup());
 
 function signupSubmit () {
-  const email = document.querySelector('.signup__field-email');
-  const name = document.querySelector('.signup__field-name');
-  const userName = document.querySelector('.signup__field-username');
-  const password = document.querySelector('.signup__field-password');
+  const emailErrorMessage = emailValidation(signupEmail.value);
+  const ageErrorMessage = ageValidation(signupAge.value);
+  const userNameErrorMessage = userNameValidation(signupUserName.value);
+  const passwordErrorMessage = passwordValidaton(signupPassword.value);
 
-  email.classList.remove('error');
-  name.classList.remove('error');
-  userName.classList.remove('error');
-  password.classList.remove('error');
+  const successfully = !emailErrorMessage && !ageErrorMessage && !userNameErrorMessage && !passwordErrorMessage;
+  removeErrorClassFromFields();
 
-  if (emailValidation(email.value) === false) {
-    const errorMessage = 'Вы ввели некорректный email.';
-    addErrorClassAndSetSignupError(errorMessage, email);
-  } else if (checkingEmailMatch(email.value)) {
-      const errorMessage = 'На данный email уже зарегистрирован аккаунт.';
-      addErrorClassAndSetSignupError(errorMessage, email);
-  } else if (!name.value.length) {
-      const errorMessage = 'Введите имя и фамилию.';
-      addErrorClassAndSetSignupError(errorMessage, name);
-  } else if (!userName.value.length) {
-      const errorMessage = 'Введите имя пользователя.';
-      addErrorClassAndSetSignupError(errorMessage, userName);
-  } else if (checkingUsernameMatch(userName.value)) {
-      const errorMessage = 'Это имя пользователя уже занято. Попробуйте другое.';
-      addErrorClassAndSetSignupError(errorMessage, userName);
-  } else if (passwordValidaton(password.value) === false) {
-      const errorMessage = `Пароль должен содержать как минимум восемь символов, одну
-      заглавную букву, одну строчную буква, одну цифру и один специальный символ.`;
-      addErrorClassAndSetSignupError(errorMessage, password);
-  } else {
+  setError(signupEmailError, emailErrorMessage, signupEmail);
+  setError(signupAgeError, ageErrorMessage, signupAge);
+  setError(signupUserNameError, userNameErrorMessage, signupUserName);
+  setError(signupPasswordError, passwordErrorMessage, signupPassword);
+
+  if (successfully) {
     users.setValue({
-      email: email.value,
-      name: name.value,
-      username: userName.value,
-      password: password.value,
+      email: signupEmail.value,
+      age: signupAge.value,
+      username: signupUserName.value,
+      password: signupPassword.value,
     });
-    addErrorClassAndSetSignupError('', null);
-    email.value = '';
-    name.value = '';
-    userName.value = '';
-    password.value = '';
-    switchToSignin();
+    clearSignupForm();
   }
 }
 
 function signinSubmit () {
-  const email = document.querySelector('.signin__field-email');
-  const password = document.querySelector('.signin__field-password');
+  const errorMessage = signinValidation(signinEmail.value, signinPassword.value);
 
-  email.classList.remove('error');
-  password.classList.remove('error');
-
-  if (!email.value.length) {
-    const errorMessage = 'Введите email.';
-    addErrorClassAndSetSigninError(errorMessage, email);
-  } else if (checkingEmailMatch(email.value) === false) {
-    const errorMessage = 'Пользователь с таким email не найден. Пройдите регистрацию.';
-    addErrorClassAndSetSigninError(errorMessage, email);
-  } else if (userVerification(email.value, password.value) === false) {
-    const errorMessage = 'Неверный пароль.';
-    addErrorClassAndSetSigninError(errorMessage, password);
+  if (errorMessage) {
+    signinError.innerText = errorMessage;
   } else {
-    const userData = users.getValue().find((user) => user.email === email.value);
+    const userData = findUserInDB(signinEmail.value);
     delete userData.password;
-    isLoggedInUser.setValue(userData);
-    addErrorClassAndSetSigninError('', null);
-    email.value = '';
-    password.value = '';
-    alert(`Hello ${isLoggedInUser.getValue().username}`);
-  }
-}
+    loggedInUserData.setValue(userData);
+    signinError.innerText = '';
+    signinEmail.value = '';
+    signinPassword.value = '';
 
-function userVerification (email, password) {
-  const user = users.getValue().find((user) => user.email === email);
-  
-  return user.password === password;
+    alert(`Hello`);
+  }
 }
 
 function switchToSignin () {
-  signinForm.classList.add('active');
-  signupForm.classList.remove('active');
+  signinFormWrapper.classList.add('active');
+  signupFormWrapper.classList.remove('active');
 }
 
 function switchToSignup () {
-  signupForm.classList.add('active');
-  signinForm.classList.remove('active');
+  signupFormWrapper.classList.add('active');
+  signinFormWrapper.classList.remove('active');
 }
 
-function addErrorClassAndSetSignupError (message, node) {
-  const signupError = document.querySelector('.signup__error');
-  signupError.innerText = message;
-  if (node) {
-    node.focus();
-    node.classList.add('error');
-  }
+function clearSignupForm () {
+  const clearField = (element) => element.value = '';
+  clearField(signupEmail);
+  clearField(signupAge);
+  clearField(signupUserName);
+  clearField(signupPassword);
 }
 
-function addErrorClassAndSetSigninError (message, node) {
-  const signinError = document.querySelector('.signin__error');
-  signinError.innerText = message;
-  if (node) {
-    node.focus();
-    node.classList.add('error');
-  }
+function removeErrorClassFromFields () {
+  const removeErrorClass = (element) => element.classList.remove('error');
+  removeErrorClass(signupEmail);
+  removeErrorClass(signupAge);
+  removeErrorClass(signupUserName);
+  removeErrorClass(signupPassword);
 }
 
-function emailValidation (email) {
+function setError (errorElement, errorMessage, field) {
+  errorElement.innerText = errorMessage;
+  errorMessage && field.classList.add('error');
+}
+
+function emailValidation (emailValue) {
+  let errorMessage = '';
   const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-  return reg.test(email);
+
+  errorMessage += emailValue ? '' : 'Введите email.';
+  errorMessage += reg.test(emailValue) ? '' : ' Email должен содержать символ "@" и "." а так же от 2 до 4 символов после точки.';
+  errorMessage += findUserInDB(emailValue) ? 'На данный email уже зарегистрирован аккаунт.' : '';
+
+  return errorMessage;
 }
 
-function passwordValidaton (password) {
+function ageValidation (ageValue) {
+  let errorMessage = '';
+  const reg = /^\d+$/;
+
+  errorMessage += ageValue ? '' : 'Введите возраст.';
+  errorMessage += reg.test(ageValue) ? '' : ' Допустимы только цифры.';
+
+  return errorMessage;
+}
+
+function userNameValidation (userNameValue) {
+  let errorMessage = '';
+  const isUserNameMatch = users.getValue().find((user) => user.username === userNameValue);
+
+  errorMessage += userNameValue ? '' : 'Введите имя пользователя';
+  errorMessage += isUserNameMatch ? 'Это имя пользователя уже занято. Попробуйте другое.' : '';
+
+  return errorMessage;
+}
+
+function passwordValidaton (passwordValue) {
+  let errorMessage = '';
   const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!$%@#£€*?&]{8,}$/;
-  return reg.test(password);
+
+  errorMessage += passwordValue ? '' : 'Введите пароль.';
+  errorMessage += reg.test(passwordValue) ? '' : ` Пароль должен содержать как минимум восемь символов, заглавную букву, строчную букву, цифру и специальный символ "!$%@#£€*?&".`;
+
+  return errorMessage;
 }
 
-function checkingEmailMatch (email) {
-  let match = false;
+function signinValidation (emailValue, passwordValue) {
+  if (!emailValue) {
+    return 'Введите Email и пароль.';
+  };
 
-  users.getValue().forEach((user) => {
-      if (user.email === email) {
-        match = true;
-      }
-    });
+  const user = findUserInDB(emailValue);
+  if (!user) {
+    return 'Пользователь с таким email не найден. Пройдите регистрацию.';
+  };
 
-  return match;
+  if (user.password !== passwordValue) {
+    return 'Неверный пароль';
+  } else {
+    return false;
+  }
 }
 
-function checkingUsernameMatch (userName) {
-  let match = false;
-
-  users.getValue().forEach((user) => {
-      if (user.username === userName) {
-        match = true;
-      }
-    });
-
-  return match;
+function findUserInDB (emailValue) {
+  return users.getValue().find((user) => user.email === emailValue);
 }
 
 //  reset focus when the mouse is clicked on the element, so that the outline is not displayed
