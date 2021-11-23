@@ -117,10 +117,12 @@ function handleSignupSubmit(formConfig) {
 
   if (successfully) {
     const newUser = formConfig.reduce((accum, { name, field }) => {
-      return { ...accum, [name]: field.value};
+      accum[name] = field.value;
+      return accum;
     }, {});
     const fields = formConfig.reduce((accum, { field }) => {
-      return [...accum, field];
+      accum.push(field);
+      return accum;
     }, [])
 
     users.setValue(newUser);
