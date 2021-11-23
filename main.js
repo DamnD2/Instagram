@@ -1,25 +1,83 @@
-const signupFormWrapper = document.querySelector('.signup-wrapper');
-const signupForm = document.querySelector('.signup');
-const signupEmail = signupForm.querySelector('.email');
-const signupAge = signupForm.querySelector('.age');
-const signupUserName = signupForm.querySelector('.username');
-const signupPassword = signupForm.querySelector('.password');
-const signupEmailError = signupForm.querySelector('.email-error');
-const signupAgeError = signupForm.querySelector('.age-error');
-const signupUserNameError = signupForm.querySelector('.username-error');
-const signupPasswordError = signupForm.querySelector('.password-error');
-const switchToSigninButton = document.querySelector('.main__signin-link');
+const signupFormWrapper = document.getElementById('signup-wrapper');
+const signupForm = signupFormWrapper.querySelector('.signup');
+const switchToSigninButton = signupFormWrapper.querySelector('.main__signin-link');
 
-const signinFormWrapper = document.querySelector('.signin-wrapper');
-const signinForm = document.querySelector('.signin');
+const signinFormWrapper = document.getElementById('signin-wrapper');
+const signinForm = signinFormWrapper.querySelector('.signin');
 const signinEmail = signinForm.querySelector('.email');
 const signinPassword = signinForm.querySelector('.password');
 const signinError = signinForm.querySelector('.signin__error');
-const switchToSignupButton = document.querySelector('.main__signup-link');
+const switchToSignupButton = signinFormWrapper.querySelector('.main__signup-link');
 
 const users = new LocalStorageAdapter('users', 'array');
 const loggedInUserData = new LocalStorageAdapter('loggedInUserData', 'object');
 
+signupFormConfig = [
+  {
+    name: 'email',
+    field: signupForm.querySelector('.email'),
+    errorField: signupForm.querySelector('.email-error'),
+    validationConfig: [
+      {
+        validator: isNotEmpty,
+        errorMessage: 'Введите email. '
+      },
+      {
+        validator: isEmail,
+        errorMessage: 'Email должен содержать символ "@" и "." а так же от 2 до 4 символов после точки. '
+      },
+      {
+        validator: isNoUserMatches,
+        errorMessage: 'На данный email уже зарегистрирован аккаунт.'
+      }
+    ],
+  },
+  {
+    name: 'age',
+    field: signupForm.querySelector('.age'),
+    errorField: signupForm.querySelector('.age-error'),
+    validationConfig: [
+      {
+        validator: isNotEmpty,
+        errorMessage: 'Введите возраст. '
+      },
+      {
+        validator: isNumeric,
+        errorMessage: 'Допустимы только цифры.'
+      }
+    ],
+  },
+  {
+    name: 'username',
+    field: signupForm.querySelector('.username'),
+    errorField: signupForm.querySelector('.username-error'),
+    validationConfig: [
+      {
+        validator: isNotEmpty,
+        errorMessage: 'Введите имя пользователя. '
+      },
+      {
+        validator: isNoUserNameMatches,
+        errorMessage: 'Это имя пользователя уже занято. Попробуйте другое.'
+      }
+    ],
+  },
+  {
+    name: 'password',
+    field: signupForm.querySelector('.password'),
+    errorField: signupForm.querySelector('.password-error'),
+    validationConfig: [
+      {
+        validator: isNotEmpty,
+        errorMessage: 'Введите пароль. ',
+      },
+      {
+        validator: isPassword,
+        errorMessage: 'Пароль должен содержать как минимум восемь символов, заглавную букву, строчную букву, цифру и специальный символ "!$%@#£€*?&".'
+      }
+    ],
+  },
+];
 
 void function init () {
   const loggedInUserName = loggedInUserData.getValue().username;
@@ -28,32 +86,44 @@ void function init () {
   }
 }();
 
-signupForm.addEventListener('submit', () => {
-  signupSubmit(signupEmail.value, signupAge.value, signupUserName.value, signupPassword.value);
-});
 signinForm.addEventListener('submit', () => {
   signinSubmit(signinEmail.value, signinPassword.value);
 });
+signupForm.addEventListener('submit',() => handleSignupSubmit(signupFormConfig));
 switchToSigninButton.addEventListener('click', () => switchToSignin());
 switchToSignupButton.addEventListener('click', () => switchToSignup());
 
-function signupSubmit (email, age, username, password) {
-  const fields = [signupEmail, signupAge, signupUserName, signupPassword];
-  const emailErrorMessage = emailValidation(email);
-  const ageErrorMessage = ageValidation(age);
-  const userNameErrorMessage = userNameValidation(username);
-  const passwordErrorMessage = passwordValidaton(password);
+function handleSignupSubmit(formConfig) {
+  let successfully = true;
 
-  const successfully = !emailErrorMessage && !ageErrorMessage && !userNameErrorMessage && !passwordErrorMessage;
+  formConfig.forEach(({ field, errorField, validationConfig }) => {
+    const fieldValue = field.value;
+    const errors = validationConfig.reduce((accum, currentValidator) => {
+      const { errorMessage, validator } = currentValidator;
+      accum += validator(fieldValue) ? '' : errorMessage;
 
-  removeErrorClassFromFields(...fields);
-  setError(signupEmailError, emailErrorMessage, signupEmail);
-  setError(signupAgeError, ageErrorMessage, signupAge);
-  setError(signupUserNameError, userNameErrorMessage, signupUserName);
-  setError(signupPasswordError, passwordErrorMessage, signupPassword);
+      return accum;
+    }, '');
+
+    errorField.innerText = errors;
+
+    if (errors) {
+      field.classList.add('error');
+      successfully = false;
+    } else {
+      field.classList.remove('error');
+    }
+  });
 
   if (successfully) {
-    users.setValue({ email, age, username, password });
+    const newUser = formConfig.reduce((accum, { name, field }) => {
+      return { ...accum, [name]: field.value};
+    }, {});
+    const fields = formConfig.reduce((accum, { field }) => {
+      return [...accum, field];
+    }, [])
+
+    users.setValue(newUser);
     clearFields(...fields);
   }
 }
@@ -87,19 +157,6 @@ function switchToSignup () {
 
 function clearFields (...fields) {
   fields.forEach((field) => field.value = '');
-}
-
-function removeErrorClassFromFields (...fields) {
-  fields.forEach((field) => field.classList.remove('error'));
-}
-
-function setError (errorElement, errorMessage, field) {
-  errorElement.innerText = errorMessage;
-  errorMessage && field.classList.add('error');
-}
-
-function findUserInDB (email) {
-  return users.getValue().find((user) => user.email === email);
 }
 
 //  reset focus when the mouse is clicked on the element, so that the outline is not displayed
