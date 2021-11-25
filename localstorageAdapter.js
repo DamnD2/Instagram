@@ -34,8 +34,3 @@ class LocalStorageAdapter {
     localStorage.removeItem(this.keyName);
   };
 };
-
-
-/* const testArray = new LocalStorageAdapter('testArray', 'array');
-const testString = new LocalStorageAdapter('testString', 'string');
-const testObject = new LocalStorageAdapter('testObject', 'object'); */
