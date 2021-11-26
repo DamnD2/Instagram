@@ -17,8 +17,7 @@ class Form {
       fields[`${name}-error`] = errorField;
     });
   }
-
-  validateAndGetIsValid () {
+  validate () {
     let successfull = true;
     const { config, fields } = this;
 
@@ -43,7 +42,7 @@ class Form {
       }
     });
 
-    return successfull;
+    this.isValid = successfull;
   }
 
   getFieldsData () {

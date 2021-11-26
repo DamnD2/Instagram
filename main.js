@@ -20,20 +20,20 @@ void function init () {
   }
 }();
 
-signinForm.addEventListener('submit', () => {
-  signinSubmit(signinEmail.value, signinPassword.value);
-});
-signupForm.form.addEventListener('submit',() => {
-  const isValid = signupForm.validateAndGetIsValid();
+signinForm.addEventListener('submit', () => signinSubmit(signinEmail.value, signinPassword.value));
+signupForm.form.addEventListener('submit', signupSubmit);
+switchToSigninButton.addEventListener('click', switchToSignin);
+switchToSignupButton.addEventListener('click', switchToSignup);
 
-  if (isValid) {
+function signupSubmit () {
+  signupForm.validate();
+
+  if (signupForm.isValid) {
     const newUser = signupForm.getFieldsData();
     users.setValue(newUser);
     signupForm.clear();
   }
-});
-switchToSigninButton.addEventListener('click', () => switchToSignin());
-switchToSignupButton.addEventListener('click', () => switchToSignup());
+}
 
 function signinSubmit (email, password) {
   const errorMessage = signinValidation(email, password);

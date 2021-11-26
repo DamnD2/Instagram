@@ -13,72 +13,7 @@
 </head>
 
 <body>
-  <div class="app">
-    <main class="main">
-      <div class="signin-wrapper active" id="signin-wrapper">
-        <form class="signin">
-          <h2 class="signin__title">Instagram</h2>
-          <input type="text" class="signin__field email" placeholder="Электронный адрес">
-          <input type="password" class="signin__field password" placeholder="Пароль">
-          <button type='submit' class="signin__submit">Войти</button>
-          <p class="signin__error"></p>
-          <div class="signin__text-wrapper">
-            <div class="signin__text-line"></div>
-            <p class=" signin__text">ИЛИ</p>
-            <div class="signin__text-line"></div>
-          </div>
-          <div class="signin__facebook" tabindex="0">
-            <img class="signin__facebook-icon" src="./media/signin-facebook-icon.svg" alt="facebook">
-            <p class="signin__facebook-text">Войти через Facebook</p>
-          </div>
-        </form>
-        <div class="main__signup">
-          <p class="main__signup-text">У вас ещё нет аккаунта?</p>
-          <a href="#" class="main__signup-link">Зарегистрироваться</a>
-        </div>
-      </div>
-
-      <div class="signup-wrapper" id="signup-wrapper">
-        <form class="signup">
-          <h2 class="signup__title">Instagram</h2>
-          <p class="signup__title-text">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</p>
-          <div class="signup__facebook" tabindex="0">
-            <img class="signup__facebook-icon" src="./media/signup-facebook-icon.svg" alt="facebook">
-            <p class="signup__facebook-text">Войти через Facebook</p>
-          </div>
-          <div class="signup__text-wrapper">
-            <div class="signup__text-line"></div>
-            <p class=" signup__text">ИЛИ</p>
-            <div class="signup__text-line"></div>
-          </div>
-          <input type="text" class="signup__field email" placeholder="Электронный адрес">
-          <div class="email-error"></div>
-          <input type="text" class="signup__field age" placeholder="Возраст">
-          <div class="age-error"></div>
-          <input type="text" class="signup__field username" placeholder="Имя пользователя">
-          <div class="username-error"></div>
-          <input type="password" class="signup__field password" placeholder="Пароль">
-          <div class="password-error"></div>
-          <button type="submit" class="signup__submit">Регистрация</button>
-          <p class="signup__info">Регистрируясь, вы принимаете наши Условия, Политику использования данных и Политику в
-            отношении файлов cookie.</p>
-        </form>
-        <div class="main__signin">
-          <p class="main__signin-text">Есть аккаунт?</p>
-          <a href="#" class="main__signin-link">Вход</a>
-        </div>
-      </div>
-    </main>
-    <footer class="footer">
-      <h4 class="footer__title">Developed by Daineko Vitaly © 2021</h1>
-    </footer>
-  </div>
-
-  <script src="./Form.js"></script>
-  <script src="./localstorageAdapter.js"></script>
-  <script src="./validation.js"></script>
-  <script src="./formConfigs.js"></script>
-  <script src="./main.js"></script>
+  <div id="app"></div>
 </body>
 
 </html>
