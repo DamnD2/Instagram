@@ -1,4 +1,4 @@
-class LocalStorageAdapter {
+export default class LocalStorageAdapter {
   constructor(keyName, dataType) {
     this.keyName = keyName;
     this.dataType = dataType;

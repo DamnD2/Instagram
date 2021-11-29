@@ -1,6 +1,6 @@
-class Form {
-  constructor(selector, validationConfig) {
-    this.form = document.querySelector(selector);
+export default class Form {
+  constructor(form, validationConfig) {
+    this.form = form;
     this.config = validationConfig;
     this.fields = {};
     this._init();

@@ -1,4 +1,6 @@
-const signupFormConfig = [
+import { isNotEmpty, isEmail, isNoUserMatches, isNumeric, isNoUserNameMatches, isPassword } from "./validators"; 
+
+export const signupFormConfig = [
   {
     name: 'email',
     validators: [

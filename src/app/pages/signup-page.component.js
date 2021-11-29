@@ -1,34 +1,57 @@
-<!-- <div class="app">
-  <main class="main">
-    <div class="signin-wrapper active" id="signin-wrapper">
-      <form class="signin">
-        <h2 class="signin__title">Instagram</h2>
-        <input type="text" class="signin__field email" placeholder="Электронный адрес">
-        <input type="password" class="signin__field password" placeholder="Пароль">
-        <button type='submit' class="signin__submit">Войти</button>
-        <p class="signin__error"></p>
-        <div class="signin__text-wrapper">
-          <div class="signin__text-line"></div>
-          <p class=" signin__text">ИЛИ</p>
-          <div class="signin__text-line"></div>
-        </div>
-        <div class="signin__facebook" tabindex="0">
-          <img class="signin__facebook-icon" src="/media/signin-facebook-icon.svg" alt="facebook">
-          <p class="signin__facebook-text">Войти через Facebook</p>
-        </div>
-      </form>
-      <div class="main__signup">
-        <p class="main__signup-text">У вас ещё нет аккаунта?</p>
-        <a href="#" class="main__signup-link">Зарегистрироваться</a>
-      </div>
-    </div>
+import { DefaultComponent } from "../../Framework";
+import facebookIcon from '../../assets/signup-facebook-icon.svg';
+import LocalStorageAdapter from '../../utils/localstorageAdapter';
+import Form from '../../utils/Form';
+import { signupFormConfig } from "../../utils/formConfigs";
 
+class SignupPageComponent extends DefaultComponent {
+  constructor(config) {
+    super(config);
+    this.form = null;
+    this.users = new LocalStorageAdapter('users', 'array');
+    this.loggedInUserData = new LocalStorageAdapter('loggedInUserData', 'object');
+  }
+
+  events() {
+    return {
+      'submit .signup': 'onSubmit',
+      'mousedown .main__signin-link': 'onMousedown',
+      'mousedown .signup__submit': 'onMousedown',
+      'mousedown .signup__facebook': 'onMousedown',
+    }
+  }
+
+  onSubmit() {
+    //initializing the form after rendering
+    if (!this.form) {
+      this.form = new Form(this.el, signupFormConfig);
+    }
+    const { form, users, loggedInUserData} = this;
+
+    form.validate();
+    if (form.isValid) {
+      const newUser = form.getFieldsData();
+      users.setValue(newUser);
+      loggedInUserData.setValue(newUser);
+      form.clear();
+    }
+  }
+
+  // reset focus when the mouse is clicked on the element, so that the outline is not displayed
+  onMousedown(event) {
+    event.preventDefault();
+  }
+}
+
+export const signupPageComponent = new SignupPageComponent({
+  selector: 'app-signup-page',
+  template: `
     <div class="signup-wrapper" id="signup-wrapper">
       <form class="signup">
         <h2 class="signup__title">Instagram</h2>
         <p class="signup__title-text">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</p>
         <div class="signup__facebook" tabindex="0">
-          <img class="signup__facebook-icon" src="/media/signin-facebook-icon.svg" alt="facebook">
+          <img class="signup__facebook-icon" src=${facebookIcon} alt="facebook">
           <p class="signup__facebook-text">Войти через Facebook</p>
         </div>
         <div class="signup__text-wrapper">
@@ -50,11 +73,8 @@
       </form>
       <div class="main__signin">
         <p class="main__signin-text">Есть аккаунт?</p>
-        <a href="#" class="main__signin-link">Вход</a>
+        <a href="#signin" class="main__signin-link">Вход</a>
       </div>
     </div>
-  </main>
-  <footer class="footer">
-    <h4 class="footer__title">Developed by Daineko Vitaly © 2021</h1>
-  </footer>
-</div> -->
+  `
+});
