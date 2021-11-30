@@ -11,9 +11,9 @@ class AppModule extends DefaultModule {
 
 export const appModule = new AppModule({
   components: [
-    appComponent,
+    /* appComponent, */
     footerComponent,
   ],
   rootComponent: appComponent,
-  routes: appRoutes
+  routes: appRoutes,
 })

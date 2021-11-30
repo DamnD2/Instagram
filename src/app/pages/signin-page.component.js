@@ -1,9 +1,46 @@
 import { DefaultComponent } from "../../Framework";
-import facebookIcon from '../../assets/signin-facebook-icon.svg'
+import facebookIcon from '../../assets/signin-facebook-icon.svg';
+import { signinValidation, findUserInDB } from '../../utils/validators';
+import LocalStorageAdapter from '../../utils/localstorageAdapter'
 
 class SigninPageComponent extends DefaultComponent {
   constructor(config) {
     super(config);
+    this.loggedInUserData = new LocalStorageAdapter('loggedInUserData', 'object');
+  }
+
+  events() {
+    return {
+      'submit .signin': 'onSubmit',
+      'mousedown .main__signup-link': 'onMousedown',
+      'mousedown .signin__submit': 'onMousedown',
+      'mousedown .signin__facebook': 'onMousedown',
+    }
+  }
+
+  onSubmit() {
+    const emailField = this.el.querySelector('.email');
+    const passwordField = this.el.querySelector('.password');
+    const errorField = this.el.querySelector('.signin__error');
+    const errorMessage = signinValidation(emailField.value, passwordField.value);
+
+    if (errorMessage) {
+      errorField.innerText = errorMessage;
+    } else {
+      const userData = findUserInDB(emailField.value);
+      delete userData.password;
+      this.loggedInUserData.setValue(userData);
+      errorField.innerText = '';
+      emailField.value = '';
+      passwordField.value = '';
+
+      alert(`Hello`);
+    }
+  }
+
+  // reset focus when the mouse is clicked on the element, so that the outline is not displayed
+  onMousedown(event) {
+    event.preventDefault();
   }
 }
 
