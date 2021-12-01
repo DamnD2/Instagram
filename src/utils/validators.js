@@ -10,8 +10,6 @@ export const isNoUserMatches = (users, str) => !findUserInDB(users, str);
 export const isNoUserNameMatches = (users, str) => !isUserNameMatch(users, str);
 export const isPasswordsMatch = (prevPasswordFieldName, password) => {
   const prevPassword = document.querySelector(`input[name=${prevPasswordFieldName}`).value;
-  console.log(`prevPassword: ${prevPassword}`);
-  console.log(`password: ${password}`);
   return prevPassword === password;
 }
 
