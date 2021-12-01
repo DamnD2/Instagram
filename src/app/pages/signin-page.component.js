@@ -1,17 +1,14 @@
 import { DefaultComponent } from "../../Framework";
 import facebookIcon from '../../assets/signin-facebook-icon.svg';
-import { getErrorSignin} from '../../utils/validators';
-import { findUserInDB } from "../../utils/utils";
-import LocalStorageAdapter from '../../utils/LocalstorageAdapter'
+import LocalStorageAdapter from '../../utils/LocalstorageAdapter';
+import SigninForm from '../../utils/SigninForm';
 
 class SigninPageComponent extends DefaultComponent {
   constructor(config) {
     super(config);
+    this.form = null;
     this.users = new LocalStorageAdapter('users', 'array');
     this.loggedInUserData = new LocalStorageAdapter('loggedInUserData', 'object');
-    this.emailField = this.el.querySelector('.email');
-    this.passwordField = this.el.querySelector('.password');
-    this.errorField = this.el.querySelector('.signin__error');
   }
 
   events() {
@@ -25,20 +22,19 @@ class SigninPageComponent extends DefaultComponent {
 
   onSubmit(event) {
     event.preventDefault();
-    const { emailField, passwordField, errorField } = this;
-    const errorMessage = getErrorSignin(emailField.value, passwordField.value, this.users);
+    if (!this.form) {
+      this.form = new SigninForm(this.el, this.users);
+    }
 
-    if (errorMessage) {
-      errorField.innerText = errorMessage;
-    } else {
-      const userData = findUserInDB(this.users, emailField.value);
-      delete userData.password;
-      this.loggedInUserData.setValue(userData);
-      errorField.innerText = '';
-      emailField.value = '';
-      passwordField.value = '';
+    const { form, loggedInUserData} = this;
 
-      alert(`Hello`);
+    form.validate();
+    if (form.isValid) {
+      const newUser = form.getUserData();
+      loggedInUserData.setValue(newUser);
+      form.clear();
+      location.hash = '';
+      alert(`Hello ${loggedInUserData.getValue().username}`);
     }
   }
 

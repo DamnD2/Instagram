@@ -8,6 +8,12 @@ export const isEmail = (str) => /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-
 export const isPassword = (str) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!$%@#£€*?&]{8,}$/.test(str);
 export const isNoUserMatches = (users, str) => !findUserInDB(users, str);
 export const isNoUserNameMatches = (users, str) => !isUserNameMatch(users, str);
+export const isPasswordsMatch = (prevPasswordFieldName, password) => {
+  const prevPassword = document.querySelector(`input[name=${prevPasswordFieldName}`).value;
+  console.log(`prevPassword: ${prevPassword}`);
+  console.log(`password: ${password}`);
+  return prevPassword === password;
+}
 
 export function getErrorSignin(email, password, users) {
   if (isEmpty(email)) {
@@ -21,7 +27,7 @@ export function getErrorSignin(email, password, users) {
 
   if (user.password !== password) {
     return 'Неверный пароль';
-  } else {
-    return false;
   }
+
+  return '';
 }

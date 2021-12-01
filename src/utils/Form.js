@@ -26,6 +26,7 @@ export default class Form {
       accum = { ...accum, ...control.getValueObj() }
       return accum;
     }, {});
+    delete result['confirm-password'];
     return result;
   }
 

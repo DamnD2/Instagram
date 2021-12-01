@@ -23,7 +23,6 @@ class SignupPageComponent extends DefaultComponent {
 
   onSubmit(event) {
     event.preventDefault();
-    //initializing the form after rendering
     if (!this.form) {
       this.form = new Form(this.el, signupFormConfig);
     }
@@ -36,11 +35,10 @@ class SignupPageComponent extends DefaultComponent {
       loggedInUserData.setValue(newUser);
       form.clear();
       location.hash = '';
-      alert(`Hello ${loggedInUserData.getValue().username}`)
+      alert(`Hello ${loggedInUserData.getValue().username}`);
     }
   }
 
-  // reset focus when the mouse is clicked on the element, so that the outline is not displayed
   onMousedown(event) {
     event.preventDefault();
   }
@@ -63,13 +61,15 @@ export const signupPageComponent = new SignupPageComponent({
           <div class="signup__text-line"></div>
         </div>
         <input type="text" name="email" class="signup__field" placeholder="Электронный адрес">
-        <div name="email-error" class="email-error"></div>
+        <div name="email-error" class="error-container"></div>
         <input type="text" name="age" class="signup__field" placeholder="Возраст">
-        <div name="age-error" class="age-error"></div>
+        <div name="age-error" class="error-container"></div>
         <input type="text" name="username" class="signup__field" placeholder="Имя пользователя">
-        <div name="username-error" class="username-error"></div>
+        <div name="username-error" class="error-container"></div>
         <input type="password" name="password" class="signup__field" placeholder="Пароль">
-        <div name="password-error" class="password-error"></div>
+        <div name="password-error" class="error-container"></div>
+        <input type="password" name="confirm-password" class="signup__field" placeholder="Подтвердить пароль">
+        <div name="confirm-password-error" class="error-container"></div>
         <button type="submit" class="signup__submit">Регистрация</button>
         <p class="signup__info">Регистрируясь, вы принимаете наши Условия, Политику использования данных и Политику в
           отношении файлов cookie.</p>

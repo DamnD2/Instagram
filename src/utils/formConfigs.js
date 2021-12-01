@@ -1,4 +1,4 @@
-import { isNotEmpty, isEmail, isNoUserMatches, isNumeric, isNoUserNameMatches, isPassword } from "./validators";
+import { isNotEmpty, isEmail, isNoUserMatches, isNumeric, isNoUserNameMatches, isPassword, isPasswordsMatch } from "./validators";
 
 import LocalStorageAdapter from "./LocalstorageAdapter";
 const users = new LocalStorageAdapter('users', 'array');
@@ -57,6 +57,19 @@ export const signupFormConfig = [
       {
         validator: isPassword,
         errorMessage: 'Пароль должен содержать как минимум восемь символов, заглавную букву, строчную букву, цифру и специальный символ "!$%@#£€*?&".'
+      }
+    ],
+  },
+  {
+    name: 'confirm-password',
+    validators: [
+      {
+        validator: isNotEmpty,
+        errorMessage: 'Подтвердите пароль. ',
+      },
+      {
+        validator: isPasswordsMatch.bind(null, 'password'),
+        errorMessage: 'Пароли не совпадают.'
       }
     ],
   },
