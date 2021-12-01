@@ -1,12 +1,3 @@
-_init () {
-  this.config.forEach((control) => {
-    const field = this.form.querySelector(`input[name=${control.name}]`);
-    const errorField = this.form.querySelector(`div[name="${control.name}-error"`);
-    const validators = control.validators;
-    this.controls.push(new Control(field, errorField, validators));
-  });
-}
-
 export default class Control {
   constructor(field, errorField, validators) {
     this.field = field;
