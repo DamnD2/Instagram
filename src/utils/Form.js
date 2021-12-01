@@ -1,61 +1,35 @@
+import Control from "./Control";
 export default class Form {
   constructor(form, validationConfig) {
     this.form = form;
     this.config = validationConfig;
-    this.fields = {};
+    this.controls = [];
+    this.isValid = false;
     this._init();
   }
 
   _init () {
-    const { form, config, fields } = this;
-
-    config.forEach(({name}) => {
-      const field = form.querySelector(`.${name}`);
-      const errorField = form.querySelector(`.${name}-error`);
-
-      fields[name] = field;
-      fields[`${name}-error`] = errorField;
-    });
+    this.config.forEach((control) => this.controls.push(new Control(control, this.form)));
   }
+
   validate () {
-    let successfull = true;
-    const { config, fields } = this;
-
-    config.forEach(({ name, validators }) => {
-      const field = fields[name];
-      const errorField = fields[`${name}-error`];
-      const fieldValue = field.value;
-      const errors = validators.reduce((accum, currentValidator) => {
-        const { errorMessage, validator } = currentValidator;
-        accum += validator(fieldValue) ? '' : errorMessage;
-
-        return accum;
-      }, '');
-
-      errorField.innerText = errors;
-
-      if (errors) {
-        field.classList.add('error');
-        successfull = false;
-      } else {
-        field.classList.remove('error');
-      }
-    });
-
-    this.isValid = successfull;
+    const isvalid = this.controls.reduce((accum, control) => {
+      control.validate();
+      if (!control.isValid) return false;
+      return accum;
+    }, true);
+    this.isValid = isvalid;
   }
 
   getFieldsData () {
-    const { config, form } = this;
-
-    return config.reduce((accum, { name }) => {
-      const field = form.querySelector(`.${name}`);
-      accum[name] = field.value;
+    const result = this.controls.reduce((accum, control) => {
+      accum = { ...accum, ...control.getValueObj() }
       return accum;
     }, {});
+    return result;
   }
 
   clear () {
-    Object.values(this.fields).forEach((element) => element.value = '');
+    Object.values(this.controls).forEach((control) => control.field.value = '');
   }
 };

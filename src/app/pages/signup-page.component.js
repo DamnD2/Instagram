@@ -1,6 +1,6 @@
 import { DefaultComponent } from "../../Framework";
 import facebookIcon from '../../assets/signup-facebook-icon.svg';
-import LocalStorageAdapter from '../../utils/localstorageAdapter';
+import LocalStorageAdapter from '../../utils/LocalstorageAdapter';
 import Form from '../../utils/Form';
 import { signupFormConfig } from "../../utils/formConfigs";
 
@@ -21,7 +21,8 @@ class SignupPageComponent extends DefaultComponent {
     }
   }
 
-  onSubmit() {
+  onSubmit(event) {
+    event.preventDefault();
     //initializing the form after rendering
     if (!this.form) {
       this.form = new Form(this.el, signupFormConfig);
@@ -34,6 +35,8 @@ class SignupPageComponent extends DefaultComponent {
       users.setValue(newUser);
       loggedInUserData.setValue(newUser);
       form.clear();
+      location.hash = '';
+      alert(`Hello ${loggedInUserData.getValue().username}`)
     }
   }
 
@@ -59,14 +62,14 @@ export const signupPageComponent = new SignupPageComponent({
           <p class=" signup__text">ИЛИ</p>
           <div class="signup__text-line"></div>
         </div>
-        <input type="text" class="signup__field email" placeholder="Электронный адрес">
-        <div class="email-error"></div>
-        <input type="text" class="signup__field age" placeholder="Возраст">
-        <div class="age-error"></div>
-        <input type="text" class="signup__field username" placeholder="Имя пользователя">
-        <div class="username-error"></div>
-        <input type="password" class="signup__field password" placeholder="Пароль">
-        <div class="password-error"></div>
+        <input type="text" name="email" class="signup__field" placeholder="Электронный адрес">
+        <div name="email-error" class="email-error"></div>
+        <input type="text" name="age" class="signup__field" placeholder="Возраст">
+        <div name="age-error" class="age-error"></div>
+        <input type="text" name="username" class="signup__field" placeholder="Имя пользователя">
+        <div name="username-error" class="username-error"></div>
+        <input type="password" name="password" class="signup__field" placeholder="Пароль">
+        <div name="password-error" class="password-error"></div>
         <button type="submit" class="signup__submit">Регистрация</button>
         <p class="signup__info">Регистрируясь, вы принимаете наши Условия, Политику использования данных и Политику в
           отношении файлов cookie.</p>
