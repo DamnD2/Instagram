@@ -1,9 +1,9 @@
-import { DefaultModule } from "./DefaultModule";
-import { DefaultComponent } from "./DefaultComponent";
-import { router } from "../utils/router";
+import { Module } from "./module/Module";
+import { Component } from "./component/Component";
+import { router } from "./routing/router";
 
 export { 
-  DefaultModule,
-  DefaultComponent,
+  Module,
+  Component,
   router,
 };

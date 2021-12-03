@@ -17,6 +17,11 @@ const config = {
     open: true,
     host: "localhost",
   },
+  resolve: {
+    alias: {
+      'framework': path.resolve(__dirname, "src/Framework"),
+    }
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: "index.html",

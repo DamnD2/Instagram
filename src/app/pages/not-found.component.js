@@ -1,6 +1,6 @@
-import { DefaultComponent } from "../../Framework";
+import { Component } from "framework";
 
-class NotFoundComponent extends DefaultComponent {
+class NotFoundComponent extends Component {
   constructor(config) {
     super(config);
   }

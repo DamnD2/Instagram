@@ -1,9 +1,9 @@
-import { DefaultModule } from "../Framework/index.js";
+import { Module } from "framework";
 import { appComponent } from "./app.component.js";
 import { appRoutes } from "./app.routes.js";
 import { footerComponent } from "./common/footer.component.js";
 
-class AppModule extends DefaultModule {
+class AppModule extends Module {
   constructor(config){
     super(config);
   }

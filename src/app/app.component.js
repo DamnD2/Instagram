@@ -1,7 +1,7 @@
-import { DefaultComponent } from "../Framework/DefaultComponent.js";
+import { Component } from "framework";
 import './app.scss';
 
-class AppComponent extends DefaultComponent {
+class AppComponent extends Component {
   constructor(config){
     super(config);
   }
@@ -12,7 +12,7 @@ export const appComponent = new AppComponent({
   template: `
     <div class="app">
       <main class="main">
-        <router-outlet></router-outlet>
+        <router-root></router-root>
       </main>
       <app-footer></app-footer>
     </div>

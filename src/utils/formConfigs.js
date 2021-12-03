@@ -61,7 +61,7 @@ export const signupFormConfig = [
     ],
   },
   {
-    name: 'confirm-password',
+    name: 'confirmpassword',
     validators: [
       {
         validator: isNotEmpty,

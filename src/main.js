@@ -7,10 +7,12 @@ const loggedInUserData = new LocalstorageAdapter('loggedInUserData', 'object');
 
 void function init () {
   const loggedInUserName = loggedInUserData.getValue().username;
-  setHash('');
   if(loggedInUserName) {
-    alert(`Hello ${loggedInUserName}`);
+    setHash('');
+  } else {
+    setHash('signin');
   }
 }();
 
 appModule.start();
+

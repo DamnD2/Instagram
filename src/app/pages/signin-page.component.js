@@ -1,9 +1,9 @@
-import { DefaultComponent } from "../../Framework";
+import { Component } from "framework";
 import facebookIcon from '../../assets/signin-facebook-icon.svg';
 import LocalStorageAdapter from '../../utils/LocalstorageAdapter';
 import SigninForm from '../../utils/SigninForm';
 
-class SigninPageComponent extends DefaultComponent {
+class SigninPageComponent extends Component {
   constructor(config) {
     super(config);
     this.form = null;

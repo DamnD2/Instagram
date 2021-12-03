@@ -23,6 +23,6 @@ export default class Control {
   }
 
   getValueObj() {
-    return { [this.name]: this.field.value };
+    return { [this.field.name]: this.field.value };
   }
 }

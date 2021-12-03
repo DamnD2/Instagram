@@ -1,12 +1,12 @@
 import { Component } from "framework";
 
-class FooterComponent extends Component {
+class HeaderComponent extends Component {
   constructor(config) {
     super(config);
   }
 }
 
-export const footerComponent = new FooterComponent({
+export const headerComponent = new HeaderComponent({
   selector: 'app-footer',
   template: `
     <footer class="footer">

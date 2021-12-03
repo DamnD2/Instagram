@@ -1,4 +1,5 @@
 import Control from "./Control";
+import { clearInputs } from "./utils";
 export default class Form {
   constructor(form, validationConfig) {
     this.form = form;
@@ -31,11 +32,12 @@ export default class Form {
       accum = { ...accum, ...control.getValueObj() }
       return accum;
     }, {});
-    delete result['confirm-password'];
+    delete result['confirmpassword'];
     return result;
   }
 
   clear () {
-    Object.values(this.controls).forEach((control) => control.field.value = '');
+    const inputs = this.controls.map((control) => control.field);
+    clearInputs(...inputs);
   }
 };

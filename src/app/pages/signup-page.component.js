@@ -1,10 +1,10 @@
-import { DefaultComponent } from "../../Framework";
+import { Component } from "framework";
 import facebookIcon from '../../assets/signup-facebook-icon.svg';
 import LocalStorageAdapter from '../../utils/LocalstorageAdapter';
 import Form from '../../utils/Form';
 import { signupFormConfig } from "../../utils/formConfigs";
 
-class SignupPageComponent extends DefaultComponent {
+class SignupPageComponent extends Component {
   constructor(config) {
     super(config);
     this.form = null;
@@ -31,11 +31,12 @@ class SignupPageComponent extends DefaultComponent {
     form.validate();
     if (form.isValid) {
       const newUser = form.getFieldsData();
+      console.log(newUser);
       users.setValue(newUser);
       loggedInUserData.setValue(newUser);
       form.clear();
-      location.hash = '';
-      alert(`Hello ${loggedInUserData.getValue().username}`);
+      /* location.hash = ''; */
+      /* alert(`Hello ${loggedInUserData.getValue().username}`); */
     }
   }
 
@@ -68,8 +69,8 @@ export const signupPageComponent = new SignupPageComponent({
         <div name="username-error" class="error-container"></div>
         <input type="password" name="password" class="signup__field" placeholder="Пароль">
         <div name="password-error" class="error-container"></div>
-        <input type="password" name="confirm-password" class="signup__field" placeholder="Подтвердить пароль">
-        <div name="confirm-password-error" class="error-container"></div>
+        <input type="password" name="confirmpassword" class="signup__field" placeholder="Подтвердить пароль">
+        <div name="confirmpassword-error" class="error-container"></div>
         <button type="submit" class="signup__submit">Регистрация</button>
         <p class="signup__info">Регистрируясь, вы принимаете наши Условия, Политику использования данных и Политику в
           отношении файлов cookie.</p>
