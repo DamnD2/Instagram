@@ -5,7 +5,7 @@ import { signupPageComponent } from "./pages/signup-page.component";
 
 export const appRoutes = [
   { path: '**', component: notFoundComponent },
-  { path: '', component: homePageComponent },
+  { path: 'main', component: homePageComponent },
   { path: 'signin', component: signinPageComponent },
   { path: 'signup', component: signupPageComponent },
 ];

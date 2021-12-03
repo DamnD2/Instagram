@@ -11,7 +11,7 @@ export const notFoundComponent = new NotFoundComponent({
   template: `
     <div class="not-found">
       <h2 class="not-found__title">Страница не найдена</h2>
-      <a href="#" class="not-found__link">Перейти на главную</a>
+      <a href="#main" class="not-found__link">Перейти на главную</a>
     </div>
   `
 });

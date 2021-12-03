@@ -1,7 +1,8 @@
 import { Module } from "framework";
 import { appComponent } from "./app.component.js";
 import { appRoutes } from "./app.routes.js";
-import { footerComponent } from "./common/footer.component.js";
+import { footerComponent } from "./components/footer.component";
+import { headerComponent } from "./components/header.component";
 
 class AppModule extends Module {
   constructor(config){
@@ -12,6 +13,7 @@ class AppModule extends Module {
 export const appModule = new AppModule({
   components: [
     /* appComponent, */
+    headerComponent,
     footerComponent,
   ],
   rootComponent: appComponent,

@@ -11,6 +11,7 @@ export const appComponent = new AppComponent({
   selector: 'app-root',
   template: `
     <div class="app">
+      <app-header></app-header>
       <main class="main">
         <router-root></router-root>
       </main>

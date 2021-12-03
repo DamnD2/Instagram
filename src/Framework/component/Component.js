@@ -2,12 +2,13 @@ export class Component {
   constructor(config) {
     this.selector = config.selector;
     this.template = config.template;
+    this.data = config.data;
     this.el = null;
   }
 
   init() {
     this.el = document.querySelector(this.selector);
-    this.el.innerHTML = this.template;
+    this.el.innerHTML = compileTemplate(this.template, this.data);
 
     initEvents.call(this);
   }
@@ -25,4 +26,13 @@ function initEvents() {
       .querySelector(listener[1])
       .addEventListener(listener[0], this[events[key]].bind(this))
   })
+}
+
+function compileTemplate (template, data) {
+  if (data) {
+    const reg = /\{{(.*?)}}/gi;
+    template = template.replace(reg, (str, key) => data[key.trim()]);
+  }
+
+  return template;
 }
