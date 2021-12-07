@@ -9,76 +9,56 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
   </style>
-  <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
-  <div class="app">
-    <main class="main">
-      <div class="signin-wrapper active" id="signin-wrapper">
-        <form class="signin">
-          <h2 class="signin__title">Instagram</h2>
-          <input type="text" class="signin__field email" placeholder="Электронный адрес">
-          <input type="password" class="signin__field password" placeholder="Пароль">
-          <button type='submit' class="signin__submit">Войти</button>
-          <p class="signin__error"></p>
-          <div class="signin__text-wrapper">
-            <div class="signin__text-line"></div>
-            <p class=" signin__text">ИЛИ</p>
-            <div class="signin__text-line"></div>
-          </div>
-          <div class="signin__facebook" tabindex="0">
-            <img class="signin__facebook-icon" src="./media/signin-facebook-icon.svg" alt="facebook">
-            <p class="signin__facebook-text">Войти через Facebook</p>
-          </div>
-        </form>
-        <div class="main__signup">
-          <p class="main__signup-text">У вас ещё нет аккаунта?</p>
-          <a href="#" class="main__signup-link">Зарегистрироваться</a>
-        </div>
-      </div>
+  <app-root></app-root>
 
-      <div class="signup-wrapper" id="signup-wrapper">
-        <form class="signup">
-          <h2 class="signup__title">Instagram</h2>
-          <p class="signup__title-text">Зарегистрируйтесь, чтобы смотреть фото и видео ваших друзей.</p>
-          <div class="signup__facebook" tabindex="0">
-            <img class="signup__facebook-icon" src="./media/signup-facebook-icon.svg" alt="facebook">
-            <p class="signup__facebook-text">Войти через Facebook</p>
-          </div>
-          <div class="signup__text-wrapper">
-            <div class="signup__text-line"></div>
-            <p class=" signup__text">ИЛИ</p>
-            <div class="signup__text-line"></div>
-          </div>
-          <input type="text" class="signup__field email" placeholder="Электронный адрес">
-          <div class="email-error"></div>
-          <input type="text" class="signup__field age" placeholder="Возраст">
-          <div class="age-error"></div>
-          <input type="text" class="signup__field username" placeholder="Имя пользователя">
-          <div class="username-error"></div>
-          <input type="password" class="signup__field password" placeholder="Пароль">
-          <div class="password-error"></div>
-          <button type="submit" class="signup__submit">Регистрация</button>
-          <p class="signup__info">Регистрируясь, вы принимаете наши Условия, Политику использования данных и Политику в
-            отношении файлов cookie.</p>
-        </form>
-        <div class="main__signin">
-          <p class="main__signin-text">Есть аккаунт?</p>
-          <a href="#" class="main__signin-link">Вход</a>
+  <div class="modal" id="edituser">
+    <div class="modal__dialog">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h5 class="modal__header-title">Редактировать профиль</h5>
+          <button class="btn btn-secondary" data-dismiss="edituser">&#10006;</button>
+        </div>
+        <div class="modal__body">
+          <input type="text" name="email" class="modal__field" placeholder="Электронный адрес">
+          <div name="email-error" class="error-container"></div>
+          <input type="text" name="age" class="modal__field" placeholder="Возраст">
+          <div name="age-error" class="error-container"></div>
+          <input type="text" name="username" class="modal__field" placeholder="Имя пользователя">
+          <div name="username-error" class="error-container"></div>
+          <input type="password" name="password" class="modal__field" placeholder="Новый пароль">
+          <div name="password-error" class="error-container"></div>
+          <input type="password" name="confirmpassword" class="modal__field" placeholder="Подтвердить новый пароль">
+          <div name="confirmpassword-error" class="error-container"></div>
+        </div>
+        <div class="modal__footer">
+          <button class="btn btn-secondary mr" data-dismiss="edituser">Закрыть</button>
+          <button class="btn btn-primary" data-confirm="edituser">Сохранить изменения</button>
         </div>
       </div>
-    </main>
-    <footer class="footer">
-      <h4 class="footer__title">Developed by Daineko Vitaly © 2021</h1>
-    </footer>
+    </div>
   </div>
 
-  <script src="./Form.js"></script>
-  <script src="./localstorageAdapter.js"></script>
-  <script src="./validation.js"></script>
-  <script src="./formConfigs.js"></script>
-  <script src="./main.js"></script>
+  <div class="modal" id="removeuser">
+    <div class="modal__dialog">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h5 class="modal__header-title">Удаление профиля</h5>
+          <button class="btn btn-secondary" data-dismiss="removeuser">&#10006;</button>
+        </div>
+        <div class="modal__body">
+          <p class="modal__text">Вы действительно хотиет удалить профиль?</p>
+        </div>
+        <div class="modal__footer">
+          <button class="btn btn-secondary mr" data-dismiss="removeuser">Отмена</button>
+          <button class="btn btn-primary" data-confirm="removeuser">Подтвердить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>

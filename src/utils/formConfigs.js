@@ -1,4 +1,7 @@
-const signupFormConfig = [
+import { isNotEmpty, isEmail, isNoUserMatches, isNumeric, isNoUserNameMatches, isPassword, isPasswordsMatch } from "./validators";
+import { getUsersLS } from "./localstorageAdapter";
+
+export const signupFormConfig = [
   {
     name: 'email',
     validators: [
@@ -11,7 +14,7 @@ const signupFormConfig = [
         errorMessage: 'Email должен содержать символ "@" и "." а так же от 2 до 4 символов после точки. '
       },
       {
-        validator: isNoUserMatches,
+        validator: isNoUserMatches.bind(null, getUsersLS),
         errorMessage: 'На данный email уже зарегистрирован аккаунт.'
       }
     ],
@@ -37,7 +40,7 @@ const signupFormConfig = [
         errorMessage: 'Введите имя пользователя. '
       },
       {
-        validator: isNoUserNameMatches,
+        validator: isNoUserNameMatches.bind(null, getUsersLS),
         errorMessage: 'Это имя пользователя уже занято. Попробуйте другое.'
       }
     ],
@@ -52,6 +55,19 @@ const signupFormConfig = [
       {
         validator: isPassword,
         errorMessage: 'Пароль должен содержать как минимум восемь символов, заглавную букву, строчную букву, цифру и специальный символ "!$%@#£€*?&".'
+      }
+    ],
+  },
+  {
+    name: 'confirmpassword',
+    validators: [
+      {
+        validator: isNotEmpty,
+        errorMessage: 'Подтвердите пароль. ',
+      },
+      {
+        validator: isPasswordsMatch.bind(null, 'password'),
+        errorMessage: 'Пароли не совпадают.'
       }
     ],
   },
