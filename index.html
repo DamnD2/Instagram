@@ -22,17 +22,43 @@
           <button class="btn btn-secondary" data-dismiss="edituser">&#10006;</button>
         </div>
         <div class="modal__body">
-          <input type="text" name="email" class="signup__field" placeholder="Электронный адрес">
-          <input type="text" name="email" class="signup__field" placeholder="Электронный адрес">
-          <input type="text" name="email" class="signup__field" placeholder="Электронный адрес">
-          <input type="text" name="email" class="signup__field" placeholder="Электронный адрес">
+          <input type="text" name="email" class="modal__field" placeholder="Электронный адрес">
+          <div name="email-error" class="error-container"></div>
+          <input type="text" name="age" class="modal__field" placeholder="Возраст">
+          <div name="age-error" class="error-container"></div>
+          <input type="text" name="username" class="modal__field" placeholder="Имя пользователя">
+          <div name="username-error" class="error-container"></div>
+          <input type="password" name="password" class="modal__field" placeholder="Новый пароль">
+          <div name="password-error" class="error-container"></div>
+          <input type="password" name="confirmpassword" class="modal__field" placeholder="Подтвердить новый пароль">
+          <div name="confirmpassword-error" class="error-container"></div>
         </div>
         <div class="modal__footer">
           <button class="btn btn-secondary mr" data-dismiss="edituser">Закрыть</button>
-          <button class="btn btn-primary">Сохранить изменения</button>
+          <button class="btn btn-primary" data-confirm="edituser">Сохранить изменения</button>
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="modal" id="removeuser">
+    <div class="modal__dialog">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h5 class="modal__header-title">Удаление профиля</h5>
+          <button class="btn btn-secondary" data-dismiss="removeuser">&#10006;</button>
+        </div>
+        <div class="modal__body">
+          <p class="modal__text">Вы действительно хотиет удалить профиль?</p>
+        </div>
+        <div class="modal__footer">
+          <button class="btn btn-secondary mr" data-dismiss="removeuser">Отмена</button>
+          <button class="btn btn-primary" data-confirm="removeuser">Подтвердить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>

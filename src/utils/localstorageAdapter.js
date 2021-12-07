@@ -25,6 +25,15 @@ export default class LocalStorageAdapter {
     localStorage.setItem(this.keyName, JSON.stringify(newValue));
   };
 
+  removeArrayElement(index) {
+    if (this.dataType === 'array') {
+      const newArray = this.getValue();
+      newArray.splice(index, 1);
+      this.removeKey();
+      localStorage.setItem(this.keyName, JSON.stringify(newArray));
+    }
+  }
+
   removeKey() {
     localStorage.removeItem(this.keyName);
   };

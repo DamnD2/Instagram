@@ -13,12 +13,6 @@ export const loggedInUserData = new LocalstorageAdapter('loggedInUserData', 'obj
 void function init () {
   const loggedInUserName = loggedInUserData.getValue().username;
   if(!loggedInUserName) {
-    setHash('signin');
+    setHash('#signin');
   }
 }();
-
-/* window.addEventListener('hashchange', () => {
-  console.log(true);
-  const isLoggedIn = loggedInUserData.getValue().username;
-  if (!isLoggedIn) location.hash = '#signin';
-}) */

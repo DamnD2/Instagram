@@ -11,6 +11,10 @@ class SigninPageComponent extends Component {
     this.loggedInUserData = new LocalStorageAdapter('loggedInUserData', 'object');
   }
 
+  afterInit() {
+    this.form = new SigninForm(this.el, this.users);
+  }
+
   events() {
     return {
       'submit .signin': 'onSubmit',
@@ -22,10 +26,6 @@ class SigninPageComponent extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    if (!this.form) {
-      this.form = new SigninForm(this.el, this.users);
-    }
-
     const { form, loggedInUserData} = this;
 
     form.validate();
@@ -33,8 +33,7 @@ class SigninPageComponent extends Component {
       const newUser = form.getUserData();
       loggedInUserData.setValue(newUser);
       form.clear();
-      location.hash = '';
-      alert(`Hello ${loggedInUserData.getValue().username}`);
+      location.hash = '#main';
     }
   }
 

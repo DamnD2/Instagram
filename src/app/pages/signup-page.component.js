@@ -12,6 +12,10 @@ class SignupPageComponent extends Component {
     this.loggedInUserData = new LocalStorageAdapter('loggedInUserData', 'object');
   }
 
+  afterInit() {
+    this.form = new Form(this.el, signupFormConfig);
+  }
+
   events() {
     return {
       'submit .signup': 'onSubmit',
@@ -23,15 +27,11 @@ class SignupPageComponent extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    if (!this.form) {
-      this.form = new Form(this.el, signupFormConfig);
-    }
     const { form, users, loggedInUserData} = this;
 
     form.validate();
     if (form.isValid) {
       const newUser = form.getFieldsData();
-      console.log(newUser);
       users.setValue(newUser);
       loggedInUserData.setValue(newUser);
       form.clear();

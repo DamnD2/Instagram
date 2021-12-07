@@ -18,18 +18,18 @@ export class RoutingModule {
 function initRoute() {
   const isLoggedIn = loggedInUserData.getValue().username;
   const url = router.getUrl();
-  console.log(url)
-  if (!isLoggedIn && url === 'main') {
-    location.hash = '#signin';
-    return;
-  };
 
   let route = this.routes.find((route) => route.path === url);
   
   //not-found page
   if (!route){
     route = this.routes.find((route) => route.path === '**');
-  }
+  } 
+
+  if (route.isLoggedIn && !isLoggedIn) {
+    location.hash = '#signin';
+    return;
+  };
 
   const tag = route.component.selector;
 

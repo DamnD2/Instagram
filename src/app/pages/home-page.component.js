@@ -16,13 +16,13 @@ class HomePageComponent extends Component {
 
     const template = users.reduce((resultTemplate, user) => {
       resultTemplate += `
-        <div class="card">
+        <div class="card" data-id="${user.username}">
           <img class="card__photo" src="https://st2.depositphotos.com/2927537/7025/i/950/depositphotos_70253417-stock-photo-funny-monkey-with-a-red.jpg" />
           <h1 class="card__username">${user.username}</h3>
           <h3 class="card__email">email: ${user.email}</h3>
           <h3 class="card__age">age: ${user.age}</h3>
           <button class="card__button" data-show="edituser" name="edit">Редактировать</button>
-          <button class="card__button" name="remove">Удалить</button>
+          <button class="card__button" data-show="removeuser" name="remove">Удалить</button>
         </div>
       `;
       return resultTemplate;
