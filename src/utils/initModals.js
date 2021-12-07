@@ -1,8 +1,7 @@
 import Form from "./Form";
 import { signupFormConfig } from "./formConfigs";
-import LocalStorageAdapter from "./LocalstorageAdapter";
+import { getUsersLS, addUserLS, removeUserLS } from "./localstorageAdapter";
 
-const users = new LocalStorageAdapter('users', 'array');
 const editUserModal = document.getElementById('edituser');
 const editEmailField = editUserModal.querySelector('[name="email"]');
 const editAgeField = editUserModal.querySelector('[name="age"]');
@@ -48,7 +47,7 @@ const confirmHandlerMap = {
 }
 
 function fillEditModal(userId) {
-  const user = users.getValue().find((user) => user.username === userId);
+  const user = getUsersLS().find((user) => user.username === userId);
   editUserModal.dataset.userid = userId;
   editEmailField.value = user.email;
   editAgeField.value = user.age;
@@ -63,7 +62,7 @@ function handleEditUser({ target }) {
   
   modal.validate();
   if (modal.isValid) {
-    users.setValue(modal.getFieldsData());
+    addUserLS(modal.getFieldsData());
     modal.clear();
     closeModal(editUserModal);
     alert(`Данные ${userId} изменены успешно!`);
@@ -73,12 +72,11 @@ function handleEditUser({ target }) {
 function handleRemoveUser({ target }) {
   const userId = target.closest('.modal').dataset.userid;
   let index = null;
-  console.log(users.getValue())
-  users.getValue().forEach((user, i) => {
+  getUsersLS().forEach((user, i) => {
     console.log(userId);
     if (user.username === userId) index = i;
   });
-  index && users.removeArrayElement(index);
+  index && removeUserLS(index);
 
   closeModal(target.closest('.modal'))
 };
@@ -95,4 +93,6 @@ function closeModal(modal) {
     errorContainers.forEach((element) => element.innerText = '');
   }
   document.body.style.overflow = 'auto';
+
+  /* initComponent(homePageComponent); */
 }

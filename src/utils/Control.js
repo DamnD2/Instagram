@@ -16,9 +16,11 @@ export default class Control {
     if (errors) {
       this.field.classList.add('error');
       this.isValid = false;
+      this.errorField.classList.add('show');
     } else {
       this.field.classList.remove('error');
       this.isValid = true;
+      this.errorField.classList.remove('show');
     }
   }
 

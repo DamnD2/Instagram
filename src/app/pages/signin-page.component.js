@@ -1,18 +1,16 @@
 import { Component } from "framework";
 import facebookIcon from '../../assets/signin-facebook-icon.svg';
-import LocalStorageAdapter from '../../utils/LocalstorageAdapter';
+import { getUsersLS, setLoggedInUserLS } from '../../utils/localstorageAdapter';
 import SigninForm from '../../utils/SigninForm';
 
 class SigninPageComponent extends Component {
   constructor(config) {
     super(config);
     this.form = null;
-    this.users = new LocalStorageAdapter('users', 'array');
-    this.loggedInUserData = new LocalStorageAdapter('loggedInUserData', 'object');
   }
 
   afterInit() {
-    this.form = new SigninForm(this.el, this.users);
+    this.form = new SigninForm(this.el, getUsersLS());
   }
 
   events() {
@@ -26,12 +24,11 @@ class SigninPageComponent extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const { form, loggedInUserData} = this;
+    const { form} = this;
 
     form.validate();
     if (form.isValid) {
-      const newUser = form.getUserData();
-      loggedInUserData.setValue(newUser);
+      setLoggedInUserLS(form.getUserData());
       form.clear();
       location.hash = '#main';
     }

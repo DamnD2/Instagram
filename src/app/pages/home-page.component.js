@@ -1,9 +1,8 @@
 import { Component } from "framework";
-import LocalStorageAdapter from "../../utils/LocalstorageAdapter";
+import { getUsersLS } from "../../utils/localstorageAdapter";
 class HomePageComponent extends Component {
   constructor(config) {
     super(config);
-    this.usersL = new LocalStorageAdapter('users', 'array');
   }
 
   beforeInit() {
@@ -11,7 +10,7 @@ class HomePageComponent extends Component {
   }
 
   setTemplate() {
-    const users = this.usersL.getValue();
+    const users = getUsersLS();
     if (!users.length) return;
 
     const template = users.reduce((resultTemplate, user) => {

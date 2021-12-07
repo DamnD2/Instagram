@@ -1,8 +1,6 @@
 import { initComponent } from '../component/init.component';
 import { router } from './router'
-import LocalStorageAdapter from '../../utils/LocalstorageAdapter';
-
-const loggedInUserData = new LocalStorageAdapter('loggedInUserData', 'object');
+import { isLoggedInUser } from '../../utils/localstorageAdapter';
 
 export class RoutingModule {
   constructor(routes) {
@@ -16,17 +14,13 @@ export class RoutingModule {
 }
 
 function initRoute() {
-  const isLoggedIn = loggedInUserData.getValue().username;
   const url = router.getUrl();
-
   let route = this.routes.find((route) => route.path === url);
   
   //not-found page
-  if (!route){
-    route = this.routes.find((route) => route.path === '**');
-  } 
+  if (!route) route = this.routes.find((route) => route.path === '**');
 
-  if (route.isLoggedIn && !isLoggedIn) {
+  if (route.isLoggedIn && !isLoggedInUser()) {
     location.hash = '#signin';
     return;
   };

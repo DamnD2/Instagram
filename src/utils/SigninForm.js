@@ -14,12 +14,16 @@ export default class SigninForm {
   validate () {
     const errorMessage = getErrorSignin(this.emailField.value, this.passwordField.value, this.users);
     this.errorField.innerText = errorMessage;
-    if (!errorMessage) this.isValid = true;
+    this.errorField.classList.add('show');
+    if (!errorMessage) {
+      this.isValid = true;
+      this.errorField.classList.remove('show');
+    }
   }
 
   getUserData () {
     if (this.isValid) {
-      return findUserInDB(this.users, this.emailField.value);
+      return findUserInDB(this.emailField.value);
     }
   }
 

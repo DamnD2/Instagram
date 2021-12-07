@@ -1,4 +1,4 @@
-export default class LocalStorageAdapter {
+class LocalStorageAdapter {
   constructor(keyName, dataType) {
     this.keyName = keyName;
     this.dataType = dataType;
@@ -38,3 +38,22 @@ export default class LocalStorageAdapter {
     localStorage.removeItem(this.keyName);
   };
 };
+
+const users = new LocalStorageAdapter('users', 'array');
+
+export const getUsersLS = () => users.getValue();
+export const addUserLS = (data) => users.setValue(data);
+export const removeUserLS = (index) => users.removeArrayElement(index);
+export const removeAllUsersLS = () => users.removeKey();
+
+const loggedInUser = new LocalStorageAdapter('loggedInUser', 'object');
+
+export const getLoggedInUserLS = () => loggedInUser.getValue();
+export const setLoggedInUserLS = (data) => loggedInUser.setValue(data);
+export const removeLoggedInUserLS = () => loggedInUser.removeKey();
+export const isLoggedInUser = () => getLoggedInUserLS().username;
+
+
+
+
+

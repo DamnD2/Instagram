@@ -1,15 +1,14 @@
 import { Component } from "framework";
 import facebookIcon from '../../assets/signup-facebook-icon.svg';
-import LocalStorageAdapter from '../../utils/LocalstorageAdapter';
+import { addUserLS, setLoggedInUserLS } from '../../utils/localstorageAdapter';
 import Form from '../../utils/Form';
 import { signupFormConfig } from "../../utils/formConfigs";
+import { redirectToMainPage } from "../../utils/utils";
 
 class SignupPageComponent extends Component {
   constructor(config) {
     super(config);
     this.form = null;
-    this.users = new LocalStorageAdapter('users', 'array');
-    this.loggedInUserData = new LocalStorageAdapter('loggedInUserData', 'object');
   }
 
   afterInit() {
@@ -27,16 +26,13 @@ class SignupPageComponent extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const { form, users, loggedInUserData} = this;
+    this.form.validate();
 
-    form.validate();
-    if (form.isValid) {
-      const newUser = form.getFieldsData();
-      users.setValue(newUser);
-      loggedInUserData.setValue(newUser);
-      form.clear();
-      /* location.hash = ''; */
-      /* alert(`Hello ${loggedInUserData.getValue().username}`); */
+    if (this.form.isValid) {
+      addUserLS(this.form.getFieldsData());
+      setLoggedInUserLS(this.form.getFieldsData());
+      this.form.clear();
+      redirectToMainPage();
     }
   }
 

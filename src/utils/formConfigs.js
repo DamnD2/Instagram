@@ -1,7 +1,5 @@
 import { isNotEmpty, isEmail, isNoUserMatches, isNumeric, isNoUserNameMatches, isPassword, isPasswordsMatch } from "./validators";
-
-import LocalStorageAdapter from "./LocalstorageAdapter";
-const users = new LocalStorageAdapter('users', 'array');
+import { getUsersLS } from "./localstorageAdapter";
 
 export const signupFormConfig = [
   {
@@ -16,7 +14,7 @@ export const signupFormConfig = [
         errorMessage: 'Email должен содержать символ "@" и "." а так же от 2 до 4 символов после точки. '
       },
       {
-        validator: isNoUserMatches.bind(null, users),
+        validator: isNoUserMatches.bind(null, getUsersLS),
         errorMessage: 'На данный email уже зарегистрирован аккаунт.'
       }
     ],
@@ -42,7 +40,7 @@ export const signupFormConfig = [
         errorMessage: 'Введите имя пользователя. '
       },
       {
-        validator: isNoUserNameMatches.bind(null, users),
+        validator: isNoUserNameMatches.bind(null, getUsersLS),
         errorMessage: 'Это имя пользователя уже занято. Попробуйте другое.'
       }
     ],
