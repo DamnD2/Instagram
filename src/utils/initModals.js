@@ -1,23 +1,12 @@
 import Form from "./Form";
 import { signupFormConfig } from "./formConfigs";
-import { getUsersLS, addUserLS, removeUserLS } from "./localstorageAdapter";
-
-const editUserModal = document.getElementById('edituser');
-const editEmailField = editUserModal.querySelector('[name="email"]');
-const editAgeField = editUserModal.querySelector('[name="age"]');
-const editUsernameField = editUserModal.querySelector('[name="username"]');
-const editPasswordField = editUserModal.querySelector('[name="password"]');
-const editConfirmPasswordField = editUserModal.querySelector('[name="confirmpassword"]');
-
+import { getUsersLS, removeUserLS, editUserLS } from "./localstorageAdapter";
+import { setUrlParams } from "./utils";
 
 export function initModals() {
-  const dismissButtons = [];
-  const showButtons = [];
-  const confirmButtons = [];
-
-  document.querySelectorAll('button[data-show]').forEach((element) => showButtons.push(element));
-  document.querySelectorAll('button[data-dismiss]').forEach((element) => dismissButtons.push(element));
-  document.querySelectorAll('button[data-confirm]').forEach((element) => confirmButtons.push(element));
+  const showButtons = getArrayBySelector('[data-show]');
+  const dismissButtons = getArrayBySelector('[data-dismiss]');
+  const confirmButtons = getArrayBySelector('[data-confirm]');
 
   dismissButtons.forEach((button) => {
     const modal = document.getElementById(button.dataset.dismiss);
@@ -27,11 +16,10 @@ export function initModals() {
   showButtons.forEach((button) => {
     const modal = document.getElementById(button.dataset.show);
     button.addEventListener('click', ({ target }) => {
-      openModal(modal);
-    
       const userId = target.closest('.card').dataset.id;
       if (modal.id === 'edituser') fillEditModal(userId);
-      if (modal.id === 'removeuser') modal.dataset.userid = userId;
+      modal.dataset.userid = userId;
+      openModal(modal);
     });
   });
 
@@ -41,19 +29,32 @@ export function initModals() {
   });
 };
 
+
+
 const confirmHandlerMap = {
   'edituser': handleEditUser,
   'removeuser': handleRemoveUser,
 }
 
-function fillEditModal(userId) {
+export const editUserModal = document.getElementById('edituser');
+
+export function fillEditModal(userId) {
   const user = getUsersLS().find((user) => user.username === userId);
   editUserModal.dataset.userid = userId;
-  editEmailField.value = user.email;
-  editAgeField.value = user.age;
-  editUsernameField.value = user.username;
-  editPasswordField.value = user.password;
-  editConfirmPasswordField.value = user.password;
+  for(let key in user) {
+    editUserModal.querySelector(`[name=${key}]`).value = user[key];
+  }
+  editUserModal.querySelector(`[name="confirmpassword"]`).value = user.password;
+}
+
+function fillEditUserCard(newUserData, userId) {
+  const card = document.querySelector(`[data-id="${userId}"]`);
+  const cardUsername = card.querySelector('[name="username"]');
+  const cardEmail = card.querySelector('[name="email"]');
+  const cardAge = card.querySelector('[name="age"]');
+  cardUsername.innerHTML = newUserData.username;
+  cardEmail.innerHTML = `email: ${newUserData.email}`;
+  cardAge.innerHTML = `age: ${newUserData.age}`;
 }
 
 function handleEditUser({ target }) {
@@ -62,12 +63,19 @@ function handleEditUser({ target }) {
   
   modal.validate();
   if (modal.isValid) {
-    addUserLS(modal.getFieldsData());
+    editUserLS(userId, modal.getFieldsData());
+    fillEditUserCard(modal.getFieldsData(), userId);
+    /* modal.dataset.userid = modal.getFieldsData().username; */
     modal.clear();
     closeModal(editUserModal);
-    alert(`Данные ${userId} изменены успешно!`);
   }
 };
+
+function getArrayBySelector(selector) {
+  const arrayOfElements = [];
+  document.querySelectorAll(selector).forEach((element) => arrayOfElements.push(element));
+  return arrayOfElements;
+}
 
 function handleRemoveUser({ target }) {
   const userId = target.closest('.modal').dataset.userid;
@@ -81,9 +89,13 @@ function handleRemoveUser({ target }) {
   closeModal(target.closest('.modal'))
 };
 
+const disableScrollingBody = () => document.body.style.overflow = 'hidden';
+const enableScrollingBody = () => document.body.style.overflow = 'auto';
+
 function openModal(modal) {
   modal.classList.add('show');
-  document.body.style.overflow = 'hidden';
+  disableScrollingBody();
+  setUrlParams(`?modalUserId=${modal.dataset.userid}`);
 };
 
 function closeModal(modal) {
@@ -92,7 +104,9 @@ function closeModal(modal) {
     const errorContainers = modal.querySelectorAll('.error-container');
     errorContainers.forEach((element) => element.innerText = '');
   }
-  document.body.style.overflow = 'auto';
-
-  /* initComponent(homePageComponent); */
+  enableScrollingBody();
+  setUrlParams('');
+  const errorContainers = document.querySelectorAll('.error-container');
+  errorContainers.forEach((element) => element.classList.remove('show'));
 }
+

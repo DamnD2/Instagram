@@ -3,6 +3,9 @@ import facebookIcon from '../../assets/signin-facebook-icon.svg';
 import { getUsersLS, setLoggedInUserLS } from '../../utils/localstorageAdapter';
 import SigninForm from '../../utils/SigninForm';
 
+import headerComponent from "../components/header.component";
+import { initComponent } from "framework";
+
 class SigninPageComponent extends Component {
   constructor(config) {
     super(config);
@@ -31,6 +34,7 @@ class SigninPageComponent extends Component {
       setLoggedInUserLS(form.getUserData());
       form.clear();
       location.hash = '#main';
+      initComponent(headerComponent);
     }
   }
 

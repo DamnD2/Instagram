@@ -14,7 +14,7 @@ export const signupFormConfig = [
         errorMessage: 'Email должен содержать символ "@" и "." а так же от 2 до 4 символов после точки. '
       },
       {
-        validator: isNoUserMatches.bind(null, getUsersLS),
+        validator: isNoUserMatches,
         errorMessage: 'На данный email уже зарегистрирован аккаунт.'
       }
     ],

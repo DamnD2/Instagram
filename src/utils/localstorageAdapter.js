@@ -45,6 +45,14 @@ export const getUsersLS = () => users.getValue();
 export const addUserLS = (data) => users.setValue(data);
 export const removeUserLS = (index) => users.removeArrayElement(index);
 export const removeAllUsersLS = () => users.removeKey();
+export const findUserInLS = (email) => getUsersLS().find((user) => user.email === email);
+export const editUserLS = (userID, newUserData) => {
+  const users = getUsersLS();
+  const user = users.find((user) => user.username === userID);
+  for (let key in newUserData) user[key] = newUserData[key];
+  removeAllUsersLS();
+  users.forEach(user => addUserLS(user));
+};
 
 const loggedInUser = new LocalStorageAdapter('loggedInUser', 'object');
 
