@@ -1,6 +1,6 @@
-import { findUserInDB, clearInputs } from "./utils";
+import { clearInputs } from "./utils";
+import { findUserInLS } from './localstorageAdapter';
 import { getErrorSignin } from "./validators";
-
 export default class SigninForm {
   constructor(form, users) {
     this.form = form;
@@ -23,7 +23,7 @@ export default class SigninForm {
 
   getUserData () {
     if (this.isValid) {
-      return findUserInDB(this.emailField.value);
+      return findUserInLS(this.emailField.value);
     }
   }
 
