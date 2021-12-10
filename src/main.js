@@ -1,6 +1,5 @@
 import { appModule } from "./app/app.module";
 import { fillEditModal, editUserModal } from "./utils/initModals";
-import { headerComponent } from "./app/components/header.component";
 
 appModule.start();
 

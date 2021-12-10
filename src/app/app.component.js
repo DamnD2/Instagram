@@ -1,9 +1,14 @@
 import { Component } from "framework";
+import { addClassToRouterRoot } from "../utils/utils";
 import './app.scss';
 
 class AppComponent extends Component {
   constructor(config){
     super(config);
+  }
+
+  afterInit() {
+    addClassToRouterRoot('first-load');
   }
 }
 

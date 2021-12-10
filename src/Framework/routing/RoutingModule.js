@@ -1,6 +1,7 @@
 import { initComponent } from '../component/init.component';
 import { router } from './router'
 import { isLoggedInUser } from '../../utils/localstorageAdapter';
+import { addClassToRouterRoot, removeClassToRouterRoot } from '../../utils/utils';
 
 export class RoutingModule {
   constructor(routes) {
@@ -27,6 +28,22 @@ function initRoute() {
 
   const tag = route.component.selector;
 
-  document.querySelector('router-root').innerHTML = `<${tag}></${tag}>`;
-  initComponent(route.component);
+  const rootElement = document.querySelector('router-root');
+
+  if (rootElement.classList.contains('first-load')) {
+    rootElement.innerHTML = `<${tag}></${tag}>`;
+    setTimeout(() => {
+      initComponent(route.component)
+      addClassToRouterRoot('show');
+    });
+    rootElement.classList.remove('first-load');
+  } else {
+    removeClassToRouterRoot('show');
+    setTimeout(() => {
+      rootElement.innerHTML = `<${tag}></${tag}>`;
+      initComponent(route.component);
+      addClassToRouterRoot('show');
+    }, 1000);
+  }
+  
 }
