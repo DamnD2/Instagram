@@ -324,6 +324,16 @@ body{
   }
 }
 
+router-root{
+  opacity: 0;
+  transition: all .5s linear;
+}
+
+router-root.show{
+  opacity: 1;
+  transition: all .5s linear;
+}
+
 
 
 
@@ -368,6 +378,16 @@ body{
 }
 .modal{
   display: none;
+  transition: all .5s linear;
+}
+
+.modal.open{
+  opacity: 1;
+  transition: all .7s linear;
+}
+.modal.hidden{
+  opacity: 0;
+  transition: all .7s linear;
 }
 .modal.show{
   position: fixed;

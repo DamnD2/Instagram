@@ -94,17 +94,25 @@ const enableScrollingBody = () => document.body.style.overflow = 'auto';
 
 function openModal(modal) {
   modal.classList.add('show');
-  disableScrollingBody();
+  setTimeout(() => {
+  modal.classList.remove('hidden');
+  })
+  setTimeout(() => {
+    modal.classList.add('open');
+  },1000);
+  /* disableScrollingBody(); */
   setUrlParams(`?modalUserId=${modal.dataset.userid}`);
 };
 
 function closeModal(modal) {
-  modal.classList.remove('show');
+  modal.classList.add('hidden');
+  modal.classList.remove('open');
+  setTimeout(() => modal.classList.remove('show'), 700)
   if (modal.id === 'edituser') {
     const errorContainers = modal.querySelectorAll('.error-container');
     errorContainers.forEach((element) => element.innerText = '');
   }
-  enableScrollingBody();
+  /* enableScrollingBody(); */
   setUrlParams('');
   const errorContainers = document.querySelectorAll('.error-container');
   errorContainers.forEach((element) => element.classList.remove('show'));
