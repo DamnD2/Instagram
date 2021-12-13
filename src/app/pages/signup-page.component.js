@@ -4,6 +4,7 @@ import { addUserLS, setLoggedInUserLS } from '../../utils/localstorageAdapter';
 import Form from '../../utils/Form';
 import { signupFormConfig } from "../../utils/formConfigs";
 import { redirectToMainPage } from "../../utils/utils";
+import store from '../../Store/data';
 
 class SignupPageComponent extends Component {
   constructor(config) {
@@ -29,8 +30,10 @@ class SignupPageComponent extends Component {
     this.form.validate();
 
     if (this.form.isValid) {
-      addUserLS(this.form.getFieldsData());
-      setLoggedInUserLS(this.form.getFieldsData());
+      const newUser = this.form.getFieldsData();
+      addUserLS(newUser);
+      setLoggedInUserLS(newUser);
+      store.setLoggedInUsername(newUser.username);
       this.form.clear();
       redirectToMainPage();
     }

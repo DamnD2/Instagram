@@ -1,6 +1,7 @@
 import { Component } from "framework";
-import { initComponent } from "framework";
-import { getLoggedInUserLS, removeLoggedInUserLS } from '../../utils/localstorageAdapter';
+import { removeLoggedInUserLS } from '../../utils/localstorageAdapter';
+import store from '../../Store/data';
+import { observer } from "../../storeManager/framework";
 
 class HeaderComponent extends Component {
   constructor(config) {
@@ -10,12 +11,12 @@ class HeaderComponent extends Component {
   }
 
   beforeInit() {
-    const loggedInUser = getLoggedInUserLS().username;
+    const loggedInUserName = store.data.loggedInUsername;
     
-    if (loggedInUser) {
+    if (loggedInUserName) {
       this.data.isLoggedInUserTemplate = `
-        <span class="nav__user">${loggedInUser}</span>
-        <a href="#signin" class="nav__signin" style="font-size: 20px">Выйти</a>
+        <span class="nav__user">${loggedInUserName}</span>
+        <a href="#signin" class="nav__signout" style="font-size: 20px">Выйти</a>
       ` 
     } else {
       this.data.isLoggedInUserTemplate = `
@@ -26,17 +27,20 @@ class HeaderComponent extends Component {
   }
 
   events() {
-    return { 'click .nav__signin': 'handleClick', }
+    return {
+      'click .nav__signout': 'handleClick',
+    }
   }
 
   handleClick() {
     removeLoggedInUserLS();
-    this.beforeInit();
-    document.querySelector('.nav').innerHTML = this.data.isLoggedInUserTemplate;
+    store.setLoggedInUsername('');
   }
 }
 
-export const headerComponent = new HeaderComponent({
+const observedComponent = observer(HeaderComponent);
+
+export default new observedComponent({
   selector: 'app-header',
   template: `
     <header class="header">
@@ -47,5 +51,3 @@ export const headerComponent = new HeaderComponent({
     </header>
   `
 });
-
-export default headerComponent;

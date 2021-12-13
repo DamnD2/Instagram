@@ -23,9 +23,11 @@ function initEvents() {
   Object.keys(events).forEach((key) => {
     const listener = key.split(" ");
     
-    this.el
-      .querySelector(listener[1])
-      .addEventListener(listener[0], this[events[key]].bind(this))
+    const thisElement = this.el.querySelector(listener[1]);
+
+    if (thisElement) {
+      thisElement.addEventListener(listener[0], this[events[key]].bind(this))
+    }
   })
 }
 

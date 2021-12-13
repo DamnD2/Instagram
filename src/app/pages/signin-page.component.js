@@ -2,9 +2,8 @@ import { Component } from "framework";
 import facebookIcon from '../../assets/signin-facebook-icon.svg';
 import { getUsersLS, setLoggedInUserLS } from '../../utils/localstorageAdapter';
 import SigninForm from '../../utils/SigninForm';
-
-import headerComponent from "../components/header.component";
-import { initComponent } from "framework";
+import store from '../../Store/data';
+import { redirectToMainPage } from "../../utils/utils";
 
 class SigninPageComponent extends Component {
   constructor(config) {
@@ -32,13 +31,12 @@ class SigninPageComponent extends Component {
     form.validate();
     if (form.isValid) {
       setLoggedInUserLS(form.getUserData());
+      store.setLoggedInUsername(form.getUserData().username);
       form.clear();
-      location.hash = '#main';
-      initComponent(headerComponent);
+      redirectToMainPage();
     }
   }
 
-  // reset focus when the mouse is clicked on the element, so that the outline is not displayed
   onMousedown(event) {
     event.preventDefault();
   }

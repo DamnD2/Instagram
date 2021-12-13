@@ -1,6 +1,6 @@
 import { initComponent } from '../component/init.component';
 import { router } from './router'
-import { isLoggedInUser } from '../../utils/localstorageAdapter';
+import { getLoggedInUserName } from '../../utils/localstorageAdapter';
 import { addClassToRouterRoot, removeClassToRouterRoot } from '../../utils/utils';
 
 export class RoutingModule {
@@ -21,7 +21,7 @@ function initRoute() {
   //not-found page
   if (!route) route = this.routes.find((route) => route.path === '**');
 
-  if (route.isLoggedIn && !isLoggedInUser()) {
+  if (route.isLoggedIn && !getLoggedInUserName()) {
     location.hash = '#signin';
     return;
   };

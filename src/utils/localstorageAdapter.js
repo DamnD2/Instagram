@@ -59,7 +59,7 @@ const loggedInUser = new LocalStorageAdapter('loggedInUser', 'object');
 export const getLoggedInUserLS = () => loggedInUser.getValue();
 export const setLoggedInUserLS = (data) => loggedInUser.setValue(data);
 export const removeLoggedInUserLS = () => loggedInUser.removeKey();
-export const isLoggedInUser = () => getLoggedInUserLS().username;
+export const getLoggedInUserName = () => getLoggedInUserLS().username;
 
 
 

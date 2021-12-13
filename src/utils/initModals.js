@@ -107,10 +107,10 @@ function openModal(modal) {
 function closeModal(modal) {
   modal.classList.add('hidden');
   modal.classList.remove('open');
-  setTimeout(() => modal.classList.remove('show'), 700)
+  setTimeout(() => modal.classList.remove('show'), 700);
   if (modal.id === 'edituser') {
     const errorContainers = modal.querySelectorAll('.error-container');
-    errorContainers.forEach((element) => element.innerText = '');
+    setTimeout(() => {errorContainers.forEach((element) => element.innerText = '')}, 700);
   }
   /* enableScrollingBody(); */
   setUrlParams('');
