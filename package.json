@@ -23,6 +23,7 @@
   "homepage": "https://github.com/DamnD2/Instagram#readme",
   "devDependencies": {
     "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-decorators": "^7.16.5",
     "@babel/preset-env": "^7.16.4",
     "@webpack-cli/generators": "^2.4.1",
     "babel-loader": "^8.2.3",

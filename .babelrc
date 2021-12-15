@@ -1,11 +1,17 @@
 {
-  "plugins": ["@babel/syntax-dynamic-import"],
   "presets": [
+    ["@babel/preset-env", {
+        "shippedProposals": true,
+        "loose": true
+    }]
+  ],
+  "plugins": [
     [
-      "@babel/preset-env",
-      {
-        "modules": false
-      }
-    ]
-  ]
+        "@babel/plugin-proposal-decorators",
+        {
+            "decoratorsBeforeExport": true
+        }
+    ],
+    ["@babel/syntax-dynamic-import"]
+]
 }

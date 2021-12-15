@@ -11,5 +11,9 @@ void function init() {
     const userId = location.search.split('=')[1];
     fillEditModal(userId);
     editUserModal.classList.add('show');
+    editUserModal.classList.add('open');
+    setTimeout(() => {
+      editUserModal.classList.remove('hidden');
+    });
   }
 }();
