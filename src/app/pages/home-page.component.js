@@ -17,10 +17,22 @@ class HomePageComponent extends Component {
       resultTemplate += `
         <div class="card" data-id="${user.username}">
           <div class="card__body">
-            <img class="card__photo" src="https://st2.depositphotos.com/2927537/7025/i/950/depositphotos_70253417-stock-photo-funny-monkey-with-a-red.jpg" />
-            <h1 class="card__username" name="username">${user.username}</h3>
-            <h3 class="card__email" name="email">email: ${user.email}</h3>
-            <h3 class="card__age" name="age">age: ${user.age}</h3>
+            <h1 class="card__username" name="username">${user.username}</h1>
+            <img class="card__photo" src=${user.photoUrl || 'https://st2.depositphotos.com/2927537/7025/i/950/depositphotos_70253417-stock-photo-funny-monkey-with-a-red.jpg'} />
+            <p class="card__email" name="email"><b>Email:</b> ${user.email}</p>
+            <p class="card__age" name="age"><b>Возраст:</b> ${user.age}</p>
+            ${ user.phone
+              ? `<p class="card__phone" name="phone"><b>Телефон:</b> ${user.phone}</p>`
+              : ""
+            }
+            ${ user.sex
+              ? `<p class="card__phone" name="phone"><b>Пол:</b> ${user.sex}</p>`
+              : ""
+            }
+            ${ user.color
+              ? `<p class="card__phone ${user.color}" name="phone"><b>Телефон:</b> ${user.color}</p>`
+              : ""
+            }
           </div>
           <div class="card__footer">
             <button class="card__button" data-show="edituser" name="edit">Редактировать</button>

@@ -26,7 +26,10 @@ class HeaderComponent extends Component {
     }
   }
 
-//  @event('click', '.nav__signout')
+  events() {
+    return { 'click .nav__signout': 'handleClick', }
+  }
+
   handleClick() {
     removeLoggedInUserLS();
     store.setLoggedInUsername('');

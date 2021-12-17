@@ -60,16 +60,33 @@ export const signupPageComponent = new SignupPageComponent({
           <p class=" signup__text">ИЛИ</p>
           <div class="signup__text-line"></div>
         </div>
-        <input type="text" name="email" class="signup__field" placeholder="Электронный адрес">
-        <div name="email-error" class="error-container"></div>
-        <input type="text" name="age" class="signup__field" placeholder="Возраст">
-        <div name="age-error" class="error-container"></div>
-        <input type="text" name="username" class="signup__field" placeholder="Имя пользователя">
-        <div name="username-error" class="error-container"></div>
-        <input type="password" name="password" class="signup__field" placeholder="Пароль">
-        <div name="password-error" class="error-container"></div>
-        <input type="password" name="confirmpassword" class="signup__field" placeholder="Подтвердить пароль">
-        <div name="confirmpassword-error" class="error-container"></div>
+
+        <div class="form-item">
+          <input type="text" name="email" class="signup__field" id="signupemail" placeholder="Электронный адрес">
+          <label for="signupemail">Электронный адрес</label>
+          <div name="email-error" class="error-container"></div>
+        </div>
+        <div class="form-item">
+          <input type="text" name="age" class="signup__field" id="signupage" placeholder="Возраст">
+          <label for="signupage">Возраст</label>
+          <div name="age-error" class="error-container"></div>
+        </div>
+        <div class="form-item">
+          <input type="text" name="username" class="signup__field" id="signupusername" placeholder="Имя пользователя">
+          <label for="signupusername">Имя пользователя</label>
+          <div name="username-error" class="error-container"></div>
+        </div>
+        <div class="form-item">
+          <input type="password" name="password" class="signup__field" id="signuppass" placeholder="Пароль">
+          <label for="signuppass">Пароль</label>
+          <div name="password-error" class="error-container"></div>
+        </div>
+        <div class="form-item">
+          <input type="password" name="confirmpassword" class="signup__field" id="signupconfpass" placeholder="Подтвердить пароль">
+          <label for="signupconfpass">Подтвердить пароль</label>
+          <div name="confirmpassword-error" class="error-container"></div>
+        </div>
+        
         <button type="submit" class="signup__submit">Регистрация</button>
         <p class="signup__info">Регистрируясь, вы принимаете наши Условия, Политику использования данных и Политику в
           отношении файлов cookie.</p>

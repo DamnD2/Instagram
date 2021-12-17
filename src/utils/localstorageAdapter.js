@@ -46,6 +46,7 @@ export const addUserLS = (data) => users.setValue(data);
 export const removeUserLS = (index) => users.removeArrayElement(index);
 export const removeAllUsersLS = () => users.removeKey();
 export const findUserInLS = (email) => getUsersLS().find((user) => user.email === email);
+export const findUserInLsForUsername = (username) => getUsersLS().find((user) => user.username === username);
 export const editUserLS = (userID, newUserData) => {
   const users = getUsersLS();
   const user = users.find((user) => user.username === userID);

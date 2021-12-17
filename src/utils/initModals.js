@@ -1,7 +1,9 @@
 import Form from "./Form";
-import { signupFormConfig } from "./formConfigs";
+import { editUserConfig } from "./formConfigs";
 import { getUsersLS, removeUserLS, editUserLS } from "./localstorageAdapter";
 import { setUrlParams } from "./utils";
+import { homePageComponentLink } from "../app/app.module";
+import { initComponent } from "../Framework/component/init.component";
 
 export function initModals() {
   const showButtons = getArrayBySelector('[data-show]');
@@ -59,7 +61,7 @@ function fillEditUserCard(newUserData, userId) {
 
 function handleEditUser({ target }) {
   const userId = target.closest('.modal').dataset.userid;
-  const modal = new Form(editUserModal, signupFormConfig);
+  const modal = new Form(editUserModal, editUserConfig);
   
   modal.validate();
   if (modal.isValid) {
@@ -68,6 +70,7 @@ function handleEditUser({ target }) {
     /* modal.dataset.userid = modal.getFieldsData().username; */
     modal.clear();
     closeModal(editUserModal);
+    initComponent(homePageComponentLink);
   }
 };
 
@@ -81,40 +84,37 @@ function handleRemoveUser({ target }) {
   const userId = target.closest('.modal').dataset.userid;
   let index = null;
   getUsersLS().forEach((user, i) => {
-    console.log(userId);
     if (user.username === userId) index = i;
   });
   index && removeUserLS(index);
-
+  initComponent(homePageComponentLink);
   closeModal(target.closest('.modal'))
 };
 
-const disableScrollingBody = () => document.body.style.overflow = 'hidden';
-const enableScrollingBody = () => document.body.style.overflow = 'auto';
+/* const disableScrollingBody = () => document.body.style.overflow = 'hidden';
+const enableScrollingBody = () => document.body.style.overflow = 'auto'; */
 
 function openModal(modal) {
   modal.classList.add('show');
-  setTimeout(() => {
-  modal.classList.remove('hidden');
-  })
-  setTimeout(() => {
-    modal.classList.add('open');
-  },1000);
+  setTimeout(() => { modal.classList.remove('hidden') })
+  setTimeout(() => { modal.classList.add('open') },300);
+  if (modal.id === 'edituser') setUrlParams(`?modalUserId=${modal.dataset.userid}`);
+
   /* disableScrollingBody(); */
-  setUrlParams(`?modalUserId=${modal.dataset.userid}`);
 };
 
 function closeModal(modal) {
   modal.classList.add('hidden');
   modal.classList.remove('open');
-  setTimeout(() => modal.classList.remove('show'), 700);
+  setTimeout(() => modal.classList.remove('show'), 300);
   if (modal.id === 'edituser') {
     const errorContainers = modal.querySelectorAll('.error-container');
-    setTimeout(() => {errorContainers.forEach((element) => element.innerText = '')}, 700);
+    setTimeout(() => {errorContainers.forEach((element) => element.innerText = '')}, 300);
+    setUrlParams('');
   }
-  /* enableScrollingBody(); */
-  setUrlParams('');
   const errorContainers = document.querySelectorAll('.error-container');
   errorContainers.forEach((element) => element.classList.remove('show'));
+
+  /* enableScrollingBody(); */
 }
 

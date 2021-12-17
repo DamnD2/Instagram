@@ -48,8 +48,14 @@ export const signinPageComponent = new SigninPageComponent({
     <div class="signin-wrapper" id="signin-wrapper">
       <form class="signin">
         <h2 class="signin__title">Instagram</h2>
-        <input type="text" class="signin__field email" placeholder="Электронный адрес">
-        <input type="password" class="signin__field password" placeholder="Пароль">
+        <div class="form-item">
+          <input type="text" class="signin__field email" id="signinemail" placeholder="Электронный адрес">
+          <label for="signinemail">Электронный адрес</label>
+        </div>
+        <div class="form-item">
+        <input type="password" class="signin__field password" id="signinpass" placeholder="Пароль">
+          <label for="signinpass">Пароль</label>
+        </div>
         <button type='submit' class="signin__submit">Войти</button>
         <p class="signin__error"></p>
         <div class="signin__text-wrapper">

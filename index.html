@@ -22,16 +22,65 @@
           <button class="btn btn-secondary" data-dismiss="edituser">&#10006;</button>
         </div>
         <div class="modal__body">
-          <input type="text" name="email" class="modal__field" placeholder="Электронный адрес">
-          <div name="email-error" class="error-container"></div>
-          <input type="text" name="age" class="modal__field" placeholder="Возраст">
-          <div name="age-error" class="error-container"></div>
-          <input type="text" name="username" class="modal__field" placeholder="Имя пользователя">
-          <div name="username-error" class="error-container"></div>
-          <input type="password" name="password" class="modal__field" placeholder="Новый пароль">
-          <div name="password-error" class="error-container"></div>
-          <input type="password" name="confirmpassword" class="modal__field" placeholder="Подтвердить новый пароль">
-          <div name="confirmpassword-error" class="error-container"></div>
+          <div class="form-item">
+            <input type="text" name="email" id="editemail" class="modal__field" placeholder="Электронный адрес">
+            <label for="editemail" class="field-label">Электронный адрес</label>
+            <div name="email-error" class="error-container"></div>
+          </div>
+          <div class="form-item">
+            <input type="text" name="age" id="editage" class="modal__field" placeholder="Возраст">
+            <label for="editage" class="field-label">Возраст</label>
+            <div name="age-error" class="error-container"></div>
+          </div>
+          <div class="form-item">
+            <input type="text" name="username" id="editusername" class="modal__field" placeholder="Имя пользователя">
+            <label for="editusername" class="field-label">Имя пользователя</label>
+            <div name="username-error" class="error-container"></div>
+          </div>
+          <div class="form-item">
+            <input type="password" name="password" id="editpassword" class="modal__field" placeholder="Новый пароль">
+            <label for="editpassword" class="field-label">Новый пароль</label>
+            <div name="password-error" class="error-container"></div>
+          </div>
+          <div class="form-item">
+            <input type="password" name="confirmpassword" id="editconfpass" class="modal__field"
+              placeholder="Подтвердить новый пароль">
+            <label for="editconfpass" class="field-label">Подтвердить новый пароль</label>
+            <div name="confirmpassword-error" class="error-container"></div>
+          </div>
+          <div class="form-item">
+            <input type="tel" name="phone" id="editphone" class="modal__field" placeholder="Номер телефона">
+            <label for="editphone" class="field-label">Номер телефона</label>
+            <div name="confirmpassword-error" class="error-container"></div>
+          </div>
+          <div class="form__radio-group">
+            <p class="text">Укажите ваш пол:</p>
+            <label class="radio-label">Мужчина
+              <input type="radio" name="sex" class="modal__radio-item" value="Мужчина">
+            </label>
+            <label class="radio-label">Женщина
+              <input type="radio" name="sex" class="modal__radio-item" value="Женщина">
+            </label>
+          </div>
+          <div class="form__color-group">
+            <p class="text">Ваш любимый цвет:</p>
+            <select>
+              <option disabled selected>Выберите цвет</option>
+              <option value="red">Красный &#128997;</option>
+              <option value="orange">Оранжевый &#128999;</option>
+              <option value="yellow">Желтый &#129000;</option>
+              <option value="green">Зеленый &#129001;</option>
+              <option value="golyboi">Голубой (ты)</option>
+              <option value="blue">Синий &#128998;</option>
+              <option value="violet">Фиолетовый &#129002;</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <textarea type="password" name="description" id="editarea" class="modal__area"
+              placeholder="Описание"></textarea>
+            <label for="editarea" class="field-label">Описание</label>
+            <div name="confirmpassword-error" class="error-container"></div>
+          </div>
         </div>
         <div class="modal__footer">
           <button class="btn btn-secondary mr" data-dismiss="edituser">Закрыть</button>

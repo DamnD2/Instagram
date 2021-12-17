@@ -7,6 +7,10 @@ export default class Control {
   }
 
   validate() {
+    if (!this.validators) {
+      this.isValid = true;
+      return;
+    };
     const errors = this.validators.reduce((accum, {validator, errorMessage}) => {
       accum += validator(this.field.value) ? '' : errorMessage;
       return accum;

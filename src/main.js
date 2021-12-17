@@ -10,10 +10,12 @@ void function init() {
   if (location.search) {
     const userId = location.search.split('=')[1];
     fillEditModal(userId);
-    editUserModal.classList.add('show');
-    editUserModal.classList.add('open');
     setTimeout(() => {
-      editUserModal.classList.remove('hidden');
-    });
+      editUserModal.classList.add('show');
+      editUserModal.classList.add('open');
+      setTimeout(() => {
+        editUserModal.classList.remove('hidden');
+      });
+    }, 0)
   }
 }();

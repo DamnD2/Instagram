@@ -43,7 +43,7 @@ function initRoute() {
       rootElement.innerHTML = `<${tag}></${tag}>`;
       initComponent(route.component);
       addClassToRouterRoot('show');
-    }, 1000);
+    }, 300);
   }
   
 }
