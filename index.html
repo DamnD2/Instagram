@@ -14,12 +14,12 @@
 <body>
   <app-root></app-root>
 
-  <div class="modal hidden" id="edituser">
+  <form class="modal hidden" id="edituser">
     <div class="modal__dialog">
       <div class="modal__content">
         <div class="modal__header">
           <h5 class="modal__header-title">Редактировать профиль</h5>
-          <button class="btn btn-secondary" data-dismiss="edituser">&#10006;</button>
+          <button class="btn btn-secondary" type="button" data-dismiss="edituser">&#10006;</button>
         </div>
         <div class="modal__body">
           <div class="form-item">
@@ -51,7 +51,10 @@
           <div class="form-item">
             <input type="tel" name="phone" id="editphone" class="modal__field" placeholder="Номер телефона">
             <label for="editphone" class="field-label">Номер телефона</label>
-            <div name="confirmpassword-error" class="error-container"></div>
+          </div>
+          <div class="form-item">
+            <input type="text" name="photo" id="editphoto" class="modal__field" placeholder="Фото url">
+            <label for="editphoto" class="field-label">Фото url</label>
           </div>
           <div class="form__radio-group">
             <p class="text">Укажите ваш пол:</p>
@@ -64,15 +67,15 @@
           </div>
           <div class="form__color-group">
             <p class="text">Ваш любимый цвет:</p>
-            <select>
+            <select name="color" data-title="Выберите цвет">
               <option disabled selected>Выберите цвет</option>
-              <option value="red">Красный &#128997;</option>
-              <option value="orange">Оранжевый &#128999;</option>
-              <option value="yellow">Желтый &#129000;</option>
-              <option value="green">Зеленый &#129001;</option>
-              <option value="golyboi">Голубой (ты)</option>
-              <option value="blue">Синий &#128998;</option>
-              <option value="violet">Фиолетовый &#129002;</option>
+              <option value="Красный">Красный &#128997;</option>
+              <option value="Оранжевый">Оранжевый &#128999;</option>
+              <option value="Желтый">Желтый &#129000;</option>
+              <option value="Зеленый">Зеленый &#129001;</option>
+              <option value="Голубой">Голубой (ты)</option>
+              <option value="Синий">Синий &#128998;</option>
+              <option value="Фиолетовый">Фиолетовый &#129002;</option>
             </select>
           </div>
           <div class="form-item">
@@ -83,30 +86,31 @@
           </div>
         </div>
         <div class="modal__footer">
-          <button class="btn btn-secondary mr" data-dismiss="edituser">Закрыть</button>
-          <button class="btn btn-primary" data-confirm="edituser">Сохранить изменения</button>
+          <button class="btn btn-secondary mr" type="button" data-dismiss="edituser">Закрыть</button>
+          <button class="btn btn-primary">Сохранить
+            изменения</button>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 
-  <div class="modal hidden" id="removeuser">
+  <form class="modal hidden" id="removeuser">
     <div class="modal__dialog">
       <div class="modal__content">
         <div class="modal__header">
           <h5 class="modal__header-title">Удаление профиля</h5>
-          <button class="btn btn-secondary" data-dismiss="removeuser">&#10006;</button>
+          <button class="btn btn-secondary" type="button" data-dismiss="removeuser">&#10006;</button>
         </div>
         <div class="modal__body">
           <p class="modal__text">Вы действительно хотиет удалить профиль?</p>
         </div>
         <div class="modal__footer">
-          <button class="btn btn-secondary mr" data-dismiss="removeuser">Отмена</button>
+          <button class="btn btn-secondary mr" type="button" data-dismiss="removeuser">Отмена</button>
           <button class="btn btn-primary" data-confirm="removeuser">Подтвердить</button>
         </div>
       </div>
     </div>
-  </div>
+  </form>
 
 </body>
 

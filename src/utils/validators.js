@@ -7,7 +7,7 @@ export const isNumeric = (str) => /^\d+$/.test(str);
 export const isEmail = (str) => /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(str);
 export const isPassword = (str) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!$%@#£€*?&]{8,}$/.test(str);
 export const isNoUserMatches = (str) => !findUserInLS(str);
-export const isNoUserNameMatches = (getUsersLS, username) => !isUserNameMatch(getUsersLS, str);
+export const isNoUserNameMatches = (getUsersLS, username) => !isUserNameMatch(getUsersLS, username);
 
 export const isNoUserMatchesEdit = (email) => {
   const userNameEditetedUser = document.getElementById('edituser').dataset.userid;

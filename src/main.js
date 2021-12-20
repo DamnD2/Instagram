@@ -1,7 +1,7 @@
 import { appModule } from "./app/app.module";
 import { fillEditModal, editUserModal } from "./utils/initModals";
 import store from './Store/data';
-import { getLoggedInUserName } from "./utils/localstorageAdapter";
+import { addUserLS, getLoggedInUserName, getUsersLS } from "./utils/localstorageAdapter";
 
 appModule.start();
 
@@ -18,4 +18,17 @@ void function init() {
       });
     }, 0)
   }
+
+  initDefaultUser();
 }();
+
+function initDefaultUser() {
+  if (!getUsersLS().length) {
+    addUserLS({
+      email: 'admin',
+      username: 'admin',
+      password: 'admin',
+      age: '2kk',
+    })
+  }
+}

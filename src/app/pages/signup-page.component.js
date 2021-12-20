@@ -63,27 +63,29 @@ export const signupPageComponent = new SignupPageComponent({
 
         <div class="form-item">
           <input type="text" name="email" class="signup__field" id="signupemail" placeholder="Электронный адрес">
-          <label for="signupemail">Электронный адрес</label>
+          <label for="signupemail" class="field-label">Электронный адрес</label>
           <div name="email-error" class="error-container"></div>
         </div>
         <div class="form-item">
           <input type="text" name="age" class="signup__field" id="signupage" placeholder="Возраст">
-          <label for="signupage">Возраст</label>
+          <label for="signupage" class="field-label">Возраст</label>
           <div name="age-error" class="error-container"></div>
         </div>
+
         <div class="form-item">
           <input type="text" name="username" class="signup__field" id="signupusername" placeholder="Имя пользователя">
-          <label for="signupusername">Имя пользователя</label>
+          <label for="signupusername" class="field-label">Имя пользователя</label>
           <div name="username-error" class="error-container"></div>
         </div>
+
         <div class="form-item">
           <input type="password" name="password" class="signup__field" id="signuppass" placeholder="Пароль">
-          <label for="signuppass">Пароль</label>
+          <label for="signuppass" class="field-label">Пароль</label>
           <div name="password-error" class="error-container"></div>
         </div>
         <div class="form-item">
           <input type="password" name="confirmpassword" class="signup__field" id="signupconfpass" placeholder="Подтвердить пароль">
-          <label for="signupconfpass">Подтвердить пароль</label>
+          <label for="signupconfpass" class="field-label">Подтвердить пароль</label>
           <div name="confirmpassword-error" class="error-container"></div>
         </div>
         

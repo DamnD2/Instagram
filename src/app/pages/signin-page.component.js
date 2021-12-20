@@ -50,11 +50,11 @@ export const signinPageComponent = new SigninPageComponent({
         <h2 class="signin__title">Instagram</h2>
         <div class="form-item">
           <input type="text" class="signin__field email" id="signinemail" placeholder="Электронный адрес">
-          <label for="signinemail">Электронный адрес</label>
+          <label for="signinemail" class="field-label">Электронный адрес</label>
         </div>
         <div class="form-item">
-        <input type="password" class="signin__field password" id="signinpass" placeholder="Пароль">
-          <label for="signinpass">Пароль</label>
+          <input type="password" class="signin__field password" id="signinpass" placeholder="Пароль">
+          <label for="signinpass" class="field-label">Пароль</label>
         </div>
         <button type='submit' class="signin__submit">Войти</button>
         <p class="signin__error"></p>

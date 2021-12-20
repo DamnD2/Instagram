@@ -147,9 +147,9 @@ export const editUserConfig = [
     name: 'phone',
   },
   {
+    name: 'photo',
+  },
+  {
     name: 'description',
   },
-  /* {
-    name: '',
-  }, */
 ];

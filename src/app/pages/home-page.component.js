@@ -1,5 +1,15 @@
 import { Component } from "framework";
 import { getUsersLS } from "../../utils/localstorageAdapter";
+
+const colorMap = {
+  'Красный': '#f00',
+  'Желтый' : '#ff0',
+  'Оранжевый' : '#ffa500',
+  'Зеленый': '#0f0',
+  'Голубой': '#4bb8f7',
+  'Синий': '#00f',
+  'Фиолетовый': '#9500eb',
+}
 class HomePageComponent extends Component {
   constructor(config) {
     super(config);
@@ -18,7 +28,7 @@ class HomePageComponent extends Component {
         <div class="card" data-id="${user.username}">
           <div class="card__body">
             <h1 class="card__username" name="username">${user.username}</h1>
-            <img class="card__photo" src=${user.photoUrl || 'https://st2.depositphotos.com/2927537/7025/i/950/depositphotos_70253417-stock-photo-funny-monkey-with-a-red.jpg'} />
+            <img class="card__photo" src=${user.photo || 'https://icon-library.com/images/no-photo-available-icon/no-photo-available-icon-20.jpg'} />
             <p class="card__email" name="email"><b>Email:</b> ${user.email}</p>
             <p class="card__age" name="age"><b>Возраст:</b> ${user.age}</p>
             ${ user.phone
@@ -30,7 +40,7 @@ class HomePageComponent extends Component {
               : ""
             }
             ${ user.color
-              ? `<p class="card__phone ${user.color}" name="phone"><b>Телефон:</b> ${user.color}</p>`
+              ? `<p class="card__phone ${user.color}" name="phone"><b>Цвет: <span style="color:${colorMap[user.color]}">${user.color}</span></b></p>`
               : ""
             }
           </div>
