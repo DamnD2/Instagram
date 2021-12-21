@@ -460,6 +460,8 @@ router-root.show{
 .modal__content{
   border-radius: 0.3rem;
   background-color: #fff;
+  max-height: 97vh;
+  overflow-y: auto;
 }
 .modal__header{
   display: flex;
