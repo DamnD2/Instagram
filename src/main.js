@@ -25,10 +25,11 @@ void function init() {
 function initDefaultUser() {
   if (!getUsersLS().length) {
     addUserLS({
-      email: 'admin',
-      username: 'admin',
+      email: 'god',
+      username: 'God',
       password: 'admin',
-      age: '2kk',
-    })
+      age: '12.6kkk',
+      photo: 'https://media.discordapp.net/attachments/568141034345857129/635906494424023051/naaru.png?width=702&height=671',
+    });
   }
 }

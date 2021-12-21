@@ -29,7 +29,7 @@ export function initModals() {
     button.addEventListener('click', ({ target }) => {
       const userId = target.closest('.card').dataset.id;
 
-      if (userId === 'admin') return;
+      if (userId === 'God') return;
 
       if (modal.id === 'edituser') fillEditModal(userId);
       modal.dataset.userid = userId;
