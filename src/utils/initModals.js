@@ -1,6 +1,6 @@
 import Form from "./Form";
 import { editUserConfig } from "./formConfigs";
-import { getUsersLS, removeUserLS, editUserLS } from "./localstorageAdapter";
+import { getUsersLS, removeUserLS, editUserLS, findUserInLsForUsername } from "./localstorageAdapter";
 import { setUrlParams } from "./utils";
 import { homePageComponentLink } from "../app/app.module";
 import { initComponent } from "../Framework/component/init.component";
@@ -47,7 +47,13 @@ export function fillEditModal(userId) {
   const user = getUsersLS().find((user) => user.username === userId);
   editUserModal.dataset.userid = userId;
   for(let key in user) {
-    editUserModal.querySelector(`[name=${key}]`).value = user[key];
+    if (key === 'sex') {
+      editUserModal.querySelectorAll(`[name=${key}]`).forEach((radio) => {
+        if (radio.value === user[key])  radio.checked = true;
+      })
+    } else {
+      editUserModal.querySelector(`[name=${key}]`).value = user[key];
+    }
   }
   editUserModal.querySelector(`[name="confirmpassword"]`).value = user.password;
 }
@@ -61,12 +67,32 @@ function handleEditUser({ target }) {
   if (modal.isValid) {
     const newUserData = { ...getSexAndColorData(), ...modal.getFieldsData()}
     editUserLS(userId, newUserData);
+    addUserPhotoInLS(userId);
     /* modal.dataset.userid = modal.getFieldsData().username; */
     editUserModal.reset();
     closeModal(editUserModal);
     initComponent(homePageComponentLink);
   }
 };
+
+function addUserPhotoInLS(userId) {
+  const $myphoto = editUserModal.querySelector(`[name='myphoto']`);
+  const myphoto = Array.from($myphoto.files)[0];
+  const reader = new FileReader();
+
+  if (!myphoto) return;
+
+  reader.onload = (event) => {
+    const photoBase64 = event.target.result;
+    const user = findUserInLsForUsername(userId);
+
+    user.photo = photoBase64;
+    console.log(user)
+    editUserLS(userId, user);
+    initComponent(homePageComponentLink);
+  }
+  reader.readAsDataURL(myphoto);
+}
 
 function getSexAndColorData() {
   const data = {};
