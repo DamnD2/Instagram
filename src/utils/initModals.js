@@ -4,6 +4,8 @@ import { getUsersLS, removeUserLS, editUserLS, findUserInLsForUsername } from ".
 import { setUrlParams } from "./utils";
 import { homePageComponentLink } from "../app/app.module";
 import { initComponent } from "../Framework/component/init.component";
+import { removeUser } from "../../provider";
+import store from '../Store/data';
 
 export const editUserModal = document.getElementById('edituser');
 
@@ -87,7 +89,6 @@ function addUserPhotoInLS(userId) {
     const user = findUserInLsForUsername(userId);
 
     user.photo = photoBase64;
-    console.log(user)
     editUserLS(userId, user);
     initComponent(homePageComponentLink);
   }
@@ -104,13 +105,11 @@ function getSexAndColorData() {
   };
 
   radios.forEach((radio) => {
-    console.log(radio.checked)
     if (radio.checked) {
       data[radio.name] = radio.value;
-    } else console.log(radio.value)
+    }
   });
 
-  console.log(data);
   return data;
 }
 
@@ -121,13 +120,8 @@ function getArrayBySelector(selector) {
 }
 
 function handleRemoveUser({ target }) {
-  const userId = target.closest('.modal').dataset.userid;
-  let index = null;
-  getUsersLS().forEach((user, i) => {
-    if (user.username === userId) index = i;
-  });
-  console.log(index)
-  index && removeUserLS(index);
+  const id = target.closest('.modal').dataset.userid;
+  removeUser(id);
   initComponent(homePageComponentLink);
   closeModal(target.closest('.modal'))
 };

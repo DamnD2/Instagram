@@ -1,5 +1,6 @@
 import { Component } from "framework";
-import { getUsersLS } from "../../utils/localstorageAdapter";
+import { observer } from "../../storeManager/framework";
+import store from '../../Store/data';
 
 const colorMap = {
   'Красный': '#f00',
@@ -20,12 +21,12 @@ class HomePageComponent extends Component {
   }
 
   setTemplate() {
-    const users = getUsersLS();
+    const users = store.data.users;
     if (!users.length) return;
 
     const template = users.reduce((resultTemplate, user) => {
       resultTemplate += `
-        <div class="card" data-id="${user.username}">
+        <div class="card" data-id="${user.id}">
           <div class="card__body">
             <h1 class="card__username" name="username">${user.username}</h1>
             <img class="card__photo" src=${user.photo || 'https://icon-library.com/images/no-photo-available-icon/no-photo-available-icon-20.jpg'} />
@@ -59,11 +60,13 @@ class HomePageComponent extends Component {
   }
 }
 
-export const homePageComponent = new HomePageComponent({
+const observedComponent = observer(HomePageComponent);
+
+export const homePageComponent = new observedComponent({
   selector: 'app-home-page',
   template: `
     <div class="home">
-    ...LOADING...
+    <h2>Нет зарегистрированных пользователей</h2>
     </div>
   `
 });

@@ -7,11 +7,12 @@ export class Component {
   }
 
   init() {
-    console.log(this.selector);
     this.el = document.querySelector(this.selector);
-    this.el.innerHTML = compileTemplate(this.template, this.data);
+    if (this.el) {
+      this.el.innerHTML = compileTemplate(this.template, this.data);
 
     initEvents.call(this);
+    }
   }
 }
 

@@ -1,10 +1,9 @@
 import { clearInputs } from "./utils";
-import { findUserInLS } from './localstorageAdapter';
 import { getErrorSignin } from "./validators";
+import store from '../Store/data'
 export default class SigninForm {
-  constructor(form, users) {
+  constructor(form) {
     this.form = form;
-    this.users = users;
     this.emailField = this.form.querySelector('.email');
     this.passwordField = this.form.querySelector('.password');
     this.errorField = this.form.querySelector('.signin__error');
@@ -12,7 +11,7 @@ export default class SigninForm {
   }
 
   validate () {
-    const errorMessage = getErrorSignin(this.emailField.value, this.passwordField.value, this.users);
+    const errorMessage = getErrorSignin(this.emailField.value, this.passwordField.value, store.data.users);
     this.errorField.innerText = errorMessage;
     this.errorField.classList.add('show');
     if (!errorMessage) {
@@ -23,7 +22,8 @@ export default class SigninForm {
 
   getUserData () {
     if (this.isValid) {
-      return findUserInLS(this.emailField.value);
+      const curUser = store.data.users.find((user) => this.emailField.value === user.email);
+      return curUser;
     }
   }
 

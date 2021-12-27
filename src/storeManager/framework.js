@@ -12,7 +12,6 @@ function observer(component) {
     constructor(props){
       super(props);
       observedComponents.push(this);
-      console.log(observedComponents)
     }
   }
 

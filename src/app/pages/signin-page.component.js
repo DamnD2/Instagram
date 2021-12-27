@@ -1,9 +1,10 @@
 import { Component } from "framework";
 import facebookIcon from '../../assets/signin-facebook-icon.svg';
-import { getUsersLS, setLoggedInUserLS } from '../../utils/localstorageAdapter';
+import { setLoggedInUserLS } from '../../utils/localstorageAdapter';
 import SigninForm from '../../utils/SigninForm';
 import store from '../../Store/data';
 import { redirectToMainPage } from "../../utils/utils";
+import { observer } from "../../storeManager/framework";
 
 class SigninPageComponent extends Component {
   constructor(config) {
@@ -12,7 +13,9 @@ class SigninPageComponent extends Component {
   }
 
   afterInit() {
-    this.form = new SigninForm(this.el, getUsersLS());
+    if (this.el) {
+      this.form = new SigninForm(this.el, store.data.users);
+    }
   }
 
   events() {
@@ -42,7 +45,9 @@ class SigninPageComponent extends Component {
   }
 }
 
-export const signinPageComponent = new SigninPageComponent({
+const observedComponent = observer(SigninPageComponent);
+
+export const signinPageComponent = new observedComponent({
   selector: 'app-signin-page',
   template: `
     <div class="signin-wrapper" id="signin-wrapper">

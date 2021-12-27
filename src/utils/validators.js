@@ -32,12 +32,12 @@ export function getErrorSignin(email, password, users) {
     return 'Введите Email и пароль.';
   };
 
-  const user = findUserInLS(email);
-  if (!user) {
+  const currentUser = users.find((user) => user.email === email);
+  if (!currentUser) {
     return 'Пользователь с таким email не найден. Пройдите регистрацию.';
   };
 
-  if (user.password !== password) {
+  if (currentUser.password !== password) {
     return 'Неверный пароль';
   }
 

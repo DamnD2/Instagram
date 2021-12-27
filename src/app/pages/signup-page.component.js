@@ -5,6 +5,7 @@ import Form from '../../utils/Form';
 import { signupFormConfig } from "../../utils/formConfigs";
 import { redirectToMainPage } from "../../utils/utils";
 import store from '../../Store/data';
+import { addNewUser } from "../../../provider";
 
 class SignupPageComponent extends Component {
   constructor(config) {
@@ -25,13 +26,15 @@ class SignupPageComponent extends Component {
     }
   }
 
-  onSubmit(event) {
+  async onSubmit(event) {
     event.preventDefault();
     this.form.validate();
 
     if (this.form.isValid) {
       const newUser = this.form.getFieldsData();
-      addUserLS(newUser);
+      
+      await addNewUser(newUser);
+
       setLoggedInUserLS(newUser);
       store.setLoggedInUsername(newUser.username);
       this.form.clear();
