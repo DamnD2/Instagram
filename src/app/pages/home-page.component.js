@@ -2,6 +2,7 @@ import { Component } from "framework";
 import { observer } from "../../storeManager/framework";
 import store from '../../Store/data';
 
+//дизайн-система
 const colorMap = {
   'Красный': '#f00',
   'Желтый' : '#ff0',
@@ -29,6 +30,7 @@ class HomePageComponent extends Component {
         <div class="card" data-id="${user.id}">
           <div class="card__body">
             <h1 class="card__username" name="username">${user.username}</h1>
+            // TODO: img, picture, width, height, alt
             <img class="card__photo" src=${user.photo || 'https://icon-library.com/images/no-photo-available-icon/no-photo-available-icon-20.jpg'} />
             <p class="card__email" name="email"><b>Email:</b> ${user.email}</p>
             <p class="card__age" name="age"><b>Возраст:</b> ${user.age}</p>

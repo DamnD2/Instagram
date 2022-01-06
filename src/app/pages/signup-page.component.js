@@ -1,11 +1,10 @@
 import { Component } from "framework";
 import facebookIcon from '../../assets/signup-facebook-icon.svg';
-import { addUserLS, setLoggedInUserLS } from '../../utils/localstorageAdapter';
 import Form from '../../utils/Form';
 import { signupFormConfig } from "../../utils/formConfigs";
 import { redirectToMainPage } from "../../utils/utils";
 import store from '../../Store/data';
-import { addNewUser } from "../../../provider";
+import { login, registration } from "../../../provider";
 
 class SignupPageComponent extends Component {
   constructor(config) {
@@ -32,13 +31,12 @@ class SignupPageComponent extends Component {
 
     if (this.form.isValid) {
       const newUser = this.form.getFieldsData();
-      
-      await addNewUser(newUser);
-
-      setLoggedInUserLS(newUser);
+      await registration(newUser);
+      await login(newUser.email, newUser.password);
       store.setLoggedInUsername(newUser.username);
       this.form.clear();
       redirectToMainPage();
+      // .navigate(ROUTES.LOGIN)
     }
   }
 

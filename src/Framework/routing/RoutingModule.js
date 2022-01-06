@@ -1,7 +1,7 @@
 import { initComponent } from '../component/init.component';
-import { router } from './router'
-import { getLoggedInUserName } from '../../utils/localstorageAdapter';
+import { router } from './router';
 import { addClassToRouterRoot, removeClassToRouterRoot } from '../../utils/utils';
+import { getCookieValue } from '../../utils/cookies';
 
 export class RoutingModule {
   constructor(routes) {
@@ -21,7 +21,7 @@ function initRoute() {
   //not-found page
   if (!route) route = this.routes.find((route) => route.path === '**');
 
-  if (route.isLoggedIn && !getLoggedInUserName()) {
+  if (route.isLoggedIn && !getCookieValue('jwt')) {
     location.hash = '#signin';
     return;
   };

@@ -1,10 +1,9 @@
 import Form from "./Form";
 import { editUserConfig } from "./formConfigs";
-import { getUsersLS, removeUserLS, editUserLS, findUserInLsForUsername } from "./localstorageAdapter";
 import { setUrlParams } from "./utils";
 import { homePageComponentLink } from "../app/app.module";
 import { initComponent } from "../Framework/component/init.component";
-import { removeUser } from "../../provider";
+import { editUser, getUserByID, removeUser } from "../../provider";
 import store from '../Store/data';
 
 export const editUserModal = document.getElementById('edituser');
@@ -45,31 +44,36 @@ const confirmHandlerMap = {
   'removeuser': handleRemoveUser,
 }
 
-export function fillEditModal(userId) {
-  const user = getUsersLS().find((user) => user.username === userId);
+//
+export async function fillEditModal(userId) {
+  let user = store.data.users.find((user) => user.id === userId);
+  if (!user) user = await getUserByID(userId);
   editUserModal.dataset.userid = userId;
+
+  //
   for(let key in user) {
     if (key === 'sex') {
       editUserModal.querySelectorAll(`[name=${key}]`).forEach((radio) => {
         if (radio.value === user[key])  radio.checked = true;
       })
     } else {
-      editUserModal.querySelector(`[name=${key}]`).value = user[key];
+      const field = editUserModal.querySelector(`[name=${key}]`);
+      if (field) field.value = user[key];
     }
   }
   editUserModal.querySelector(`[name="confirmpassword"]`).value = user.password;
 }
 
-
+//
 function handleEditUser({ target }) {
   const userId = target.closest('.modal').dataset.userid;
   const modal = new Form(editUserModal, editUserConfig);
   
   modal.validate();
   if (modal.isValid) {
-    const newUserData = { ...getSexAndColorData(), ...modal.getFieldsData()}
-    editUserLS(userId, newUserData);
-    addUserPhotoInLS(userId);
+    console.log(getPhotoData())
+    const newUserData = { ...getSexAndColorData(), ...modal.getFieldsData(), ...getPhotoData() };
+    editUser(userId, newUserData);
     /* modal.dataset.userid = modal.getFieldsData().username; */
     editUserModal.reset();
     closeModal(editUserModal);
@@ -77,22 +81,21 @@ function handleEditUser({ target }) {
   }
 };
 
-function addUserPhotoInLS(userId) {
-  const $myphoto = editUserModal.querySelector(`[name='myphoto']`);
+function getPhotoData() {
+  /* const $myphoto = editUserModal.querySelector(`[name='myphoto']`);
   const myphoto = Array.from($myphoto.files)[0];
   const reader = new FileReader();
+  reader.readAsDataURL(myphoto);
 
-  if (!myphoto) return;
+  const result = {};
+
+  if (!myphoto) return {};
 
   reader.onload = (event) => {
-    const photoBase64 = event.target.result;
-    const user = findUserInLsForUsername(userId);
-
-    user.photo = photoBase64;
-    editUserLS(userId, user);
-    initComponent(homePageComponentLink);
+    result['photo'] = event.target.result;
   }
-  reader.readAsDataURL(myphoto);
+
+  return result; */
 }
 
 function getSexAndColorData() {
@@ -109,6 +112,8 @@ function getSexAndColorData() {
       data[radio.name] = radio.value;
     }
   });
+
+  
 
   return data;
 }

@@ -1,6 +1,6 @@
 import { Component } from "framework";
 import facebookIcon from '../../assets/signin-facebook-icon.svg';
-import { setLoggedInUserLS } from '../../utils/localstorageAdapter';
+import { login } from "../../../provider";
 import SigninForm from '../../utils/SigninForm';
 import store from '../../Store/data';
 import { redirectToMainPage } from "../../utils/utils";
@@ -29,12 +29,11 @@ class SigninPageComponent extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const { form} = this;
+    const { form } = this;
 
     form.validate();
     if (form.isValid) {
-      setLoggedInUserLS(form.getUserData());
-      store.setLoggedInUsername(form.getUserData().username);
+      login(signinemail.value, signinpass.value);
       form.clear();
       redirectToMainPage();
     }
@@ -51,7 +50,7 @@ export const signinPageComponent = new observedComponent({
   selector: 'app-signin-page',
   template: `
     <div class="signin-wrapper" id="signin-wrapper">
-      <form class="signin">
+      <form class="signin" (mousedown)="asdasd()">
         <h2 class="signin__title">Instagram</h2>
         <div class="form-item">
           <input type="text" class="signin__field email" id="signinemail" placeholder="Электронный адрес">

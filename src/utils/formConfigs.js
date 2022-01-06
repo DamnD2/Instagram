@@ -40,7 +40,7 @@ export const signupFormConfig = [
         errorMessage: 'Введите имя пользователя. '
       },
       {
-        validator: isNoUserNameMatches.bind(null, getUsersLS),
+        validator: isNoUserNameMatches,
         errorMessage: 'Это имя пользователя уже занято. Попробуйте другое.'
       }
     ],
@@ -112,7 +112,7 @@ export const editUserConfig = [
         errorMessage: 'Введите имя пользователя. '
       },
       {
-        validator: isNoUserNameMatchesEdit.bind(null, getUsersLS),
+        validator: isNoUserNameMatchesEdit,
         errorMessage: 'Это имя пользователя уже занято. Попробуйте другое.'
       }
     ],

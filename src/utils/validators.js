@@ -1,25 +1,25 @@
-import { findUserInLS, findUserInLsForUsername } from "./localstorageAdapter";
+import store from '../Store/data';
 
-export const isUserNameMatch = (getUsersLS, str) => getUsersLS().find((user) => user.username === str);
+export const isUserNameMatch = (username) => store.data.users.find((user) => user.username === username);
 export const isNotEmpty = (str) => !!str;
 export const isEmpty = (str) => !str;
 export const isNumeric = (str) => /^\d+$/.test(str);
 export const isEmail = (str) => /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(str);
 export const isPassword = (str) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!$%@#£€*?&]{8,}$/.test(str);
-export const isNoUserMatches = (str) => !findUserInLS(str);
-export const isNoUserNameMatches = (getUsersLS, username) => !isUserNameMatch(getUsersLS, username);
+export const isNoUserMatches = (email) => !store.data.users.find((user) => user.email === email);
+export const isNoUserNameMatches = (username) => !isUserNameMatch(username);
 
 export const isNoUserMatchesEdit = (email) => {
-  const userNameEditetedUser = document.getElementById('edituser').dataset.userid;
-  const emailSelectedUser = findUserInLsForUsername(userNameEditetedUser).email;
-  const user = findUserInLS(email);
-  return !user || emailSelectedUser === user.email;
+  const userId = document.getElementById('edituser').dataset.userid;
+  const currentUser = store.data.users.find((user) => user.id === userId);
+  const user = store.data.users.find((user) => user.email === email);
+  return !user || currentUser.email === user.email;
 };
 
-export const isNoUserNameMatchesEdit = (getUsersLS, username) => {
+export const isNoUserNameMatchesEdit = (username) => {
   const userNameEditetedUser = document.getElementById('edituser').dataset.userid;
-  const user = findUserInLsForUsername(username);
-  return !isUserNameMatch(getUsersLS, username) || userNameEditetedUser === user.username;
+  const user = store.data.users.find((user) => user.username === userNameEditetedUser);
+  return !isUserNameMatch(username) || userNameEditetedUser === user.username;
 }
 
 export const isPasswordsMatch = (prevPasswordFieldName, password) => {

@@ -8,6 +8,7 @@ class AppComponent extends Component {
   }
 
   afterInit() {
+    //
     addClassToRouterRoot('first-load');
   }
 }
@@ -18,7 +19,7 @@ export const appComponent = new AppComponent({
     <div class="app">
       <app-header></app-header>
       <main class="main">
-        <router-root></router-root>
+        <router-root animation="true"></router-root>
       </main>
       <app-footer></app-footer>
     </div>
