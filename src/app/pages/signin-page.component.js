@@ -5,6 +5,8 @@ import SigninForm from '../../utils/SigninForm';
 import store from '../../Store/data';
 import { redirectToMainPage } from "../../utils/utils";
 import { observer } from "../../storeManager/framework";
+import jwtDecode from "jwt-decode";
+import { setCookie } from "../../utils/cookies";
 
 class SigninPageComponent extends Component {
   constructor(config) {
@@ -27,13 +29,22 @@ class SigninPageComponent extends Component {
     }
   }
 
-  onSubmit(event) {
+  async onSubmit(event) {
     event.preventDefault();
     const { form } = this;
 
     form.validate();
     if (form.isValid) {
-      login(signinemail.value, signinpass.value);
+      const response = await login(signinemail.value, signinpass.value);
+      if (response.result === false) {
+        this.form.errorField.innerHTML = response.message;
+        return;
+      };
+      this.form.errorField.classList.remove('show');
+      this.form.errorField.innerHTML = '';
+      setCookie('jwt', response.token);
+      const username = jwtDecode(response.token).username;
+      store.setLoggedInUsername(username);
       form.clear();
       redirectToMainPage();
     }

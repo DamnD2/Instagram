@@ -5,6 +5,7 @@ import { signupFormConfig } from "../../utils/formConfigs";
 import { redirectToMainPage } from "../../utils/utils";
 import store from '../../Store/data';
 import { login, registration } from "../../../provider";
+import { setCookie } from "../../utils/cookies";
 
 class SignupPageComponent extends Component {
   constructor(config) {
@@ -32,7 +33,9 @@ class SignupPageComponent extends Component {
     if (this.form.isValid) {
       const newUser = this.form.getFieldsData();
       await registration(newUser);
-      await login(newUser.email, newUser.password);
+      store.data.users.push(newUser);
+      const response = await login(newUser.email, newUser.password);
+      setCookie('jwt', response.token);
       store.setLoggedInUsername(newUser.username);
       this.form.clear();
       redirectToMainPage();

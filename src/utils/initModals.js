@@ -1,10 +1,11 @@
 import Form from "./Form";
 import { editUserConfig } from "./formConfigs";
-import { setUrlParams } from "./utils";
+import { openSnackBar, redirectToSignIn, setUrlParams } from "./utils";
 import { homePageComponentLink } from "../app/app.module";
 import { initComponent } from "../Framework/component/init.component";
 import { editUser, getUserByID, removeUser } from "../../provider";
 import store from '../Store/data';
+import { deleteCookie, getCookieValue } from "./cookies";
 
 export const editUserModal = document.getElementById('edituser');
 
@@ -50,18 +51,16 @@ export async function fillEditModal(userId) {
   if (!user) user = await getUserByID(userId);
   editUserModal.dataset.userid = userId;
 
-  //
   for(let key in user) {
     if (key === 'sex') {
       editUserModal.querySelectorAll(`[name=${key}]`).forEach((radio) => {
         if (radio.value === user[key])  radio.checked = true;
       })
-    } else {
+    } else if (key !== 'password') {
       const field = editUserModal.querySelector(`[name=${key}]`);
       if (field) field.value = user[key];
     }
   }
-  editUserModal.querySelector(`[name="confirmpassword"]`).value = user.password;
 }
 
 //
@@ -71,9 +70,14 @@ function handleEditUser({ target }) {
   
   modal.validate();
   if (modal.isValid) {
-    console.log(getPhotoData())
     const newUserData = { ...getSexAndColorData(), ...modal.getFieldsData(), ...getPhotoData() };
-    editUser(userId, newUserData);
+    editUser(userId, newUserData, getCookieValue('jwt'));
+
+    const user = store.data.users.find((user) => user._id === userId);
+    const index = store.data.users.findIndex((user) => user._id === userId);
+    store.data.users[index] = { ...user, ...newUserData };
+    store.data.users = [ ...store.data.users ];
+
     /* modal.dataset.userid = modal.getFieldsData().username; */
     editUserModal.reset();
     closeModal(editUserModal);
@@ -124,9 +128,19 @@ function getArrayBySelector(selector) {
   return arrayOfElements;
 }
 
-function handleRemoveUser({ target }) {
+async function handleRemoveUser({ target }) {
   const id = target.closest('.modal').dataset.userid;
-  removeUser(id);
+  const response = await removeUser(id, getCookieValue('jwt'));
+  if (response.username) {
+    openSnackBar(`Пользователь ${response.username} был успешно удалён`);
+    store.data.users = store.data.users.filter((user) => user._id !== id);
+
+    if (response.username === store.data.loggedInUsername) {
+      store.setLoggedInUsername('');
+      redirectToSignIn();
+      deleteCookie('jwt');
+    }
+  }
   initComponent(homePageComponentLink);
   closeModal(target.closest('.modal'))
 };

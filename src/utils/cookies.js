@@ -10,3 +10,7 @@ export const getCookieValue = (key) => {
     ? result.toString().split('=')[1]
     : false;
 };
+
+export function deleteCookie(key) {
+  document.cookie = key +'=; Path=/; Expires=Thu, 01 Jan 2000 00:00:01 GMT;';
+}

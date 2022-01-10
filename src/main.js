@@ -2,7 +2,7 @@ import { appModule } from "./app/app.module";
 import { fillEditModal, editUserModal } from "./utils/initModals";
 import store from './Store/data';
 import jwtDecode from 'jwt-decode';
-import { syncDataBaseandStore } from '../provider';
+import { getUserByUsername, getUsers, syncDataBaseandStore } from '../provider';
 import { getCookieValue } from "./utils/cookies";
 
 appModule.start();
@@ -10,8 +10,10 @@ appModule.start();
 void async function init() {
   const token = getCookieValue('jwt');
   if (token) {
-    const username = jwtDecode(token).username;
-    store.setLoggedInUsername(username);
+    const currentUser = await getUserByUsername(await jwtDecode(token).username);
+    if (currentUser) {
+      store.setLoggedInUsername(currentUser.username);
+    }
   }
 
   if (location.search) {
@@ -25,7 +27,5 @@ void async function init() {
       });
     }, 0)
   }
-  await syncDataBaseandStore();
-
-  console.log(store.data.users)
+  store.data.users = await getUsers();
 }();

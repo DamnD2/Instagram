@@ -1,10 +1,6 @@
-import store from './src/Store/data';
-import jwtDecode from 'jwt-decode';
-import { setCookie } from "./src/utils/cookies";
-
-//
-const usersURL = 'http://localhost:1111/users';
-const authURL = 'http://localhost:1111/auth';
+const domen = 'http://localhost:1111';
+const usersURL = `${domen}/users`;
+const authURL = `${domen}/auth`;
 
 export async function getUsers() {
   return await request(usersURL);
@@ -19,47 +15,30 @@ export async function getUserByEmail(email) {
 }
 
 export async function getUserByUsername(username) {
-  return username ? await request(`${usersURL}/username=${username}`) : 'null';
+  return username ? await request(`${usersURL}/username=${username}`) : null;
 }
 
 export async function registration(newUser) {
   await request(`${authURL}/registration`, 'POST', newUser);
-  store.data.users.push(newUser);
 }
 
 export async function login(email, password) {
-  const response = await request(`${authURL}/login`, 'POST', { email, password });
-  const username = jwtDecode(response.token).username;
-  setCookie('jwt', response.token);
-  store.setLoggedInUsername(username);
-}
-
-export async function syncDataBaseandStore() {
-  store.data.users = await getUsers();
+  return await request(`${authURL}/login`, 'POST', { email, password });
 }
 
 export async function addNewUser(newUser) {
   await request(usersURL, 'POST', newUser);
-  //
-  store.data.users.push(newUser);
 }
 
-export async function removeUser(id) {
-  await request(`${usersURL}/${id}`, 'DELETE');
-  //
-  store.data.users = store.data.users.filter((user) => user.id !== id);
+export async function removeUser(id, token) {
+  return await request(`${usersURL}/${id}`, 'DELETE', null, token);
 }
 
-export async function editUser(id, newUserData) {
-  await request(`${usersURL}/${id}`, 'PUT', newUserData);
-  //
-  const user = store.data.users.find((user) => user.id === id);
-  const index = store.data.users.findIndex((user) => user.id === id);
-  store.data.users[index] = { ...user, ...newUserData };
-  store.data.users = [ ...store.data.users ];
+export async function editUser(id, newUserData, token) {
+  await request(`${usersURL}/${id}`, 'POST', newUserData, token);
 }
 
-async function request(url, method = 'GET', data = null, headersData) {
+async function request(url, method = 'GET', data = null, token = null) {
   try {
     const headers = {};
     let body;
@@ -69,7 +48,9 @@ async function request(url, method = 'GET', data = null, headersData) {
       body = JSON.stringify(data);
     }
 
-    if (headersData) headers = { ...headers, ...headersData }
+    if (token) {
+      headers['Authorization'] = token;
+    }
 
     const responce = await fetch(url, {
       method,

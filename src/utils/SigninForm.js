@@ -12,11 +12,10 @@ export default class SigninForm {
 
   validate () {
     const errorMessage = getErrorSignin(this.emailField.value, this.passwordField.value, store.data.users);
-    this.errorField.innerText = errorMessage;
+    if (errorMessage) this.errorField.innerText = errorMessage;
     this.errorField.classList.add('show');
     if (!errorMessage) {
       this.isValid = true;
-      this.errorField.classList.remove('show');
     }
   }
 

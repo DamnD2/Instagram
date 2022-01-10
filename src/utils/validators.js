@@ -11,15 +11,15 @@ export const isNoUserNameMatches = (username) => !isUserNameMatch(username);
 
 export const isNoUserMatchesEdit = (email) => {
   const userId = document.getElementById('edituser').dataset.userid;
-  const currentUser = store.data.users.find((user) => user.id === userId);
+  const currentUser = store.data.users.find((user) => user._id === userId);
   const user = store.data.users.find((user) => user.email === email);
   return !user || currentUser.email === user.email;
 };
 
 export const isNoUserNameMatchesEdit = (username) => {
-  const userNameEditetedUser = document.getElementById('edituser').dataset.userid;
-  const user = store.data.users.find((user) => user.username === userNameEditetedUser);
-  return !isUserNameMatch(username) || userNameEditetedUser === user.username;
+  const idEditetedUser = document.getElementById('edituser').dataset.userid;
+  const user = store.data.users.find((user) => user._id === idEditetedUser);
+  return !isUserNameMatch(username) || username === user.username;
 }
 
 export const isPasswordsMatch = (prevPasswordFieldName, password) => {
@@ -37,9 +37,9 @@ export function getErrorSignin(email, password, users) {
     return 'Пользователь с таким email не найден. Пройдите регистрацию.';
   };
 
-  if (currentUser.password !== password) {
+  /* if (currentUser.password !== password) {
     return 'Неверный пароль';
-  }
+  } */
 
   return '';
 }

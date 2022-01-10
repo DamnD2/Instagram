@@ -1,7 +1,7 @@
 import { Component } from "framework";
-import { removeLoggedInUserLS } from '../../utils/localstorageAdapter';
 import store from '../../Store/data';
 import { observer } from "../../storeManager/framework";
+import { deleteCookie } from "../../utils/cookies";
 
 class HeaderComponent extends Component {
   constructor(config) {
@@ -31,8 +31,8 @@ class HeaderComponent extends Component {
   }
 
   handleClick() {
-    removeLoggedInUserLS();
     store.setLoggedInUsername('');
+    deleteCookie('jwt');
   }
 }
 

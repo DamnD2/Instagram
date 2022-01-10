@@ -22,18 +22,21 @@ class HomePageComponent extends Component {
   }
 
   setTemplate() {
+    const defaultUserPhotoURL = 'https://icon-library.com/images/no-photo-available-icon/no-photo-available-icon-20.jpg';
     const users = store.data.users;
     if (!users.length) return;
 
     const template = users.reduce((resultTemplate, user) => {
       resultTemplate += `
-        <div class="card" data-id="${user.id}">
+        <div class="card" data-id="${user._id}">
           <div class="card__body">
             <h1 class="card__username" name="username">${user.username}</h1>
-            // TODO: img, picture, width, height, alt
-            <img class="card__photo" src=${user.photo || 'https://icon-library.com/images/no-photo-available-icon/no-photo-available-icon-20.jpg'} />
+            <img class="card__photo" src=${user.photo || defaultUserPhotoURL} width="188" height="188" />
             <p class="card__email" name="email"><b>Email:</b> ${user.email}</p>
-            <p class="card__age" name="age"><b>Возраст:</b> ${user.age}</p>
+            ${ user.age
+              ? `<p class="card__age" name="age"><b>Возраст:</b> ${user.age}</p>`
+              : ""
+            }
             ${ user.phone
               ? `<p class="card__phone" name="phone"><b>Телефон:</b> ${user.phone}</p>`
               : ""

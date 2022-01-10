@@ -3,6 +3,7 @@ export const setHash = (hash) => location.hash = hash;
 export const clearInputs = (...inputs) => inputs.forEach((input) => input.value = '');
 
 export const redirectToMainPage = () => setHash('#main');
+export const redirectToSignIn = () => setHash('#signin');
 
 export const setUrlParams = (param) => {
   const newUrl = `${location.origin}/${param}${location.hash}`
@@ -15,4 +16,12 @@ export const addClassToRouterRoot = (className) => {
 
 export const removeClassToRouterRoot = (className) => {
   document.querySelector('router-root').classList.remove(className);
+}
+
+export const openSnackBar = (message) => {
+  snackbar.innerHTML = message;
+  snackbar.classList.add('show');
+  setTimeout(() => {
+    snackbar.classList.remove('show');
+  }, 3000);
 }
