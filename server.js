@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
+const postsRouter = require('./routes/posts');
 const passportMiddleware = require('./middleware/passport');
 const keys = require('./config/keys');
 const cors = require('cors');
@@ -25,5 +26,6 @@ app.use(cors());
 
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
 
 start();

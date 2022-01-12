@@ -25,3 +25,15 @@ export const openSnackBar = (message) => {
     snackbar.classList.remove('show');
   }, 3000);
 }
+
+export const openModal = (modal) => {
+  modal.classList.add('show');
+  setTimeout(() => { modal.classList.remove('hidden') })
+  setTimeout(() => { modal.classList.add('open') },300);
+}
+
+export const closeModal = (modal) => {
+  modal.classList.add('hidden');
+  modal.classList.remove('open');
+  setTimeout(() => modal.classList.remove('show'), 300);
+}

@@ -4,6 +4,9 @@ export default {
   data: observable({
     loggedInUsername: '',
     users: [],
+    posts: {
+      
+    }
   }),
 
   setLoggedInUsername(username) {
@@ -13,7 +16,13 @@ export default {
   setUsers(data) {
     this.data.users = data;
   },
+
   addUser(newUser) {
     this.data.users.push(newUser);
+  },
+
+  setPosts(userId, userPosts) {
+    this.data.posts[userId] = userPosts;
+    this.data.posts = {...this.data.posts}
   }
 }

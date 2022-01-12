@@ -1,6 +1,7 @@
 const domen = 'http://localhost:1111';
 const usersURL = `${domen}/users`;
 const authURL = `${domen}/auth`;
+const postsURL = `${domen}/posts`;
 
 export async function getUsers() {
   return await request(usersURL);
@@ -35,7 +36,19 @@ export async function removeUser(id, token) {
 }
 
 export async function editUser(id, newUserData, token) {
-  await request(`${usersURL}/${id}`, 'POST', newUserData, token);
+  await request(`${usersURL}/${id}`, 'PUT', newUserData, token);
+}
+
+export async function getPosts(id, token) {
+  return await request(`${postsURL}/${id}`, 'GET', null, token);
+}
+
+export async function addPost(id, data, token) {
+  await request(`${postsURL}/${id}`, 'POST', data, token);
+}
+
+export async function deletePost(id, token) {
+  await request(`${postsURL}/${id}`, 'DELETE', null, token);
 }
 
 async function request(url, method = 'GET', data = null, token = null) {

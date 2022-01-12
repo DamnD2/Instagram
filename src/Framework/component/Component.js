@@ -24,10 +24,12 @@ function initEvents() {
   Object.keys(events).forEach((key) => {
     const listener = key.split(" ");
     
-    const thisElement = this.el.querySelector(listener[1]);
+    const thisElements = this.el.querySelectorAll(listener[1]);
 
-    if (thisElement) {
-      thisElement.addEventListener(listener[0], this[events[key]].bind(this))
+    if (thisElements.length) {
+      thisElements.forEach((element) => {
+        element.addEventListener(listener[0], this[events[key]].bind(this));
+      });
     }
   })
 }

@@ -22,6 +22,8 @@ export const appComponent = new AppComponent({
         <router-root animation="true"></router-root>
       </main>
       <app-footer></app-footer>
+      <app-add-post></app-add-post>
+      <app-remove-post></app-remove-post>
     </div>
 `,
 })

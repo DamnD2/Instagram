@@ -153,3 +153,18 @@ export const editUserConfig = [
     name: 'description',
   },
 ];
+
+export const addPostConfig = [
+  {
+    name: 'img',
+    validators: [
+      {
+        validator: isNotEmpty,
+        errorMessage: 'Введите фото url'
+      }
+    ],
+  },
+  {
+    name: 'description'
+  }
+]

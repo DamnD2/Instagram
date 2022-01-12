@@ -31,8 +31,6 @@ export function initModals() {
     button.addEventListener('click', ({ target }) => {
       const userId = target.closest('.card').dataset.id;
 
-      if (userId === 'God') return;
-
       if (modal.id === 'edituser') fillEditModal(userId);
       modal.dataset.userid = userId;
       openModal(modal);
@@ -47,10 +45,11 @@ const confirmHandlerMap = {
 
 //
 export async function fillEditModal(userId) {
-  let user = store.data.users.find((user) => user.id === userId);
-  if (!user) user = await getUserByID(userId);
+  let user = store.data.users.find((user) => user._id === userId);
+  if (!user) {
+    user = await getUserByID(userId);
+  };
   editUserModal.dataset.userid = userId;
-
   for(let key in user) {
     if (key === 'sex') {
       editUserModal.querySelectorAll(`[name=${key}]`).forEach((radio) => {
